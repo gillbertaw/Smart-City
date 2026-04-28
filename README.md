@@ -1,88 +1,147 @@
 # Smart City Medan
 
-Website Smart City berbasis localhost untuk tugas kuliah.
+Project Smart City berbasis web untuk tugas Pengembangan Perangkat Lunak Tangkas. Aplikasi ini memuat dashboard kota, monitoring layanan publik, voting kebijakan, forum warga, pengaduan, panel admin, dan log aktivitas.
 
 ## Tech Stack
-- **Frontend**: React.js (Vite) — port 3000
-- **Backend**: Node.js + Express.js — port 5000
-- **ORM**: Sequelize (MySQL) + Mongoose (MongoDB)
-- **Database**: MySQL (via XAMPP) + MongoDB
 
----
+- Frontend: React Vite
+- Backend: Express.js
+- Database relasional: MySQL via Sequelize
+- Database log: MongoDB via Mongoose
+- Peta: React Leaflet + OpenStreetMap
+- Chart: Recharts
+- Upload foto: Multer
+- Auth: JWT
 
-## Cara Setup & Menjalankan
+## Fitur Utama
+
+- Autentikasi login, register, forgot password, dan guest mode
+- Dashboard kota
+- Peta fasilitas publik
+- Kualitas udara
+- Status lalu lintas
+- Informasi transportasi umum
+- Monitor energi, sampah, banjir, air bersih, energi terbarukan
+- Voting dan forum kebijakan
+- Pengaduan warga dan survei kepuasan
+- Papan pengumuman resmi kota
+- Info rumah sakit, CCTV, alert bencana, statistik kesehatan
+- Direktori pendidikan, lowongan kerja lokal, dan data UMKM
+- Panel admin untuk kelola data, moderasi laporan, alert, kebijakan, pengumuman, dan log aktivitas
+
+## Cara Menjalankan
 
 ### 1. Persiapan
-- Install [Node.js](https://nodejs.org) (minimal v18)
-- Install [XAMPP](https://www.apachefriends.org) — jalankan MySQL-nya saja
-- Install [MongoDB Community Server](https://www.mongodb.com/try/download/community)
 
-### 2. Buat Database MySQL
-Buka phpMyAdmin (http://localhost/phpmyadmin) lalu buat database baru:
+Install dependency utama:
+
+- Node.js LTS
+- XAMPP atau MySQL server
+- MongoDB Community Server
+
+### 2. Setup MySQL
+
+Buat database:
+
 ```sql
 CREATE DATABASE smartcity_medan;
 ```
 
-### 3. Setup Backend
+### 3. Setup MongoDB
+
+Jika folder data default belum tersedia, jalankan MongoDB dengan dbpath lokal:
+
+```bash
+mkdir -p ~/mongodb-data
+mongod --dbpath ~/mongodb-data
+```
+
+Biarkan terminal MongoDB tetap terbuka.
+
+### 4. Setup Backend
+
 ```bash
 cd backend
 cp .env.example .env
 npm install
 npm run dev
 ```
-Backend berjalan di: http://localhost:5000
 
-### 4. Setup Frontend
+Default backend berjalan di:
+
+```text
+http://localhost:5000
+```
+
+Jika port 5000 bentrok, ubah `PORT` di `backend/.env`, lalu sesuaikan proxy di `frontend/vite.config.js`.
+
+### 5. Setup Frontend
+
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-Frontend berjalan di: http://localhost:3000
 
----
+Frontend berjalan di:
 
-## Mode Demo (1 Port)
-Jalankan perintah ini saat mau demo ke dosen:
-```bash
-# Di folder frontend
-npm run build
-
-# Di folder backend, ubah .env:
-# NODE_ENV=production
-
-# Lalu jalankan backend saja
-npm run dev
+```text
+http://localhost:3000
 ```
-Buka browser: http://localhost:5000
 
----
+## Mode Demo Satu Port
+
+Build frontend:
+
+```bash
+cd frontend
+npm run build
+```
+
+Jalankan backend mode production:
+
+```bash
+cd ../backend
+npm run demo
+```
+
+Buka:
+
+```text
+http://localhost:5000
+```
 
 ## Struktur Folder
-```
-smart-city/
+
+```text
+smartcity-bagian2/
 ├── backend/
 │   ├── src/
-│   │   ├── config/       → mysql.js, mongodb.js, upload.js
-│   │   ├── controllers/  → logic handler per fitur
-│   │   ├── middleware/   → auth.js (JWT)
-│   │   ├── models/       → Sequelize models (MySQL) + Log.js (MongoDB)
-│   │   ├── routes/       → endpoint API
-│   │   └── server.js     → entry point
-│   ├── uploads/          → file upload disimpan di sini
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   ├── seeders/
+│   │   └── server.js
 │   ├── .env.example
 │   └── package.json
 └── frontend/
     ├── src/
-    │   ├── assets/
-    │   ├── components/   → komponen reusable
-    │   ├── context/      → AuthContext.jsx
-    │   ├── pages/        → halaman-halaman website
-    │   ├── utils/        → api.js (axios instance)
+    │   ├── components/
+    │   ├── context/
+    │   ├── pages/
+    │   ├── utils/
     │   ├── App.jsx
-    │   ├── main.jsx
-    │   └── index.css     → design system global
+    │   └── main.jsx
     ├── index.html
     ├── vite.config.js
     └── package.json
 ```
+
+## Tim Pengembang
+
+- William Wiryawan (241110007)
+- Gillbert Allison Wijaya (241110385)
+- Dicky Sasqia (241111078)
+- Deidrich Zhu (241111422)
