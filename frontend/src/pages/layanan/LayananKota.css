@@ -1,0 +1,281 @@
+.svc-loading,
+.svc-message,
+.svc-panel,
+.svc-card {
+  background: #FFFFFF;
+  border: 1px solid #E8ECF2;
+  box-shadow: 0 2px 12px rgba(10, 22, 40, 0.08);
+}
+
+.svc-loading,
+.svc-message {
+  border-radius: 8px;
+  padding: 16px;
+  color: #0A1628;
+}
+
+.svc-message {
+  border-color: rgba(201, 168, 76, 0.45);
+  background: #FFFBF0;
+  margin-bottom: 16px;
+}
+
+.svc-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.svc-tabs button,
+.svc-vote-actions button,
+.svc-inline button,
+.svc-primary {
+  border: 1px solid #D4AF7A;
+  background: #FFFFFF;
+  color: #0A1628;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.svc-tabs button.active,
+.svc-tabs button:hover,
+.svc-vote-actions button:hover,
+.svc-inline button,
+.svc-primary {
+  background: #C9A84C;
+  color: #0A1628;
+}
+
+.svc-panel {
+  border-radius: 8px;
+  padding: 22px;
+  overflow: hidden;
+}
+
+.svc-panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.svc-panel-head h2 {
+  font-size: 20px;
+  color: #0A1628;
+  line-height: 1.25;
+}
+
+.svc-panel-head span,
+.svc-card span,
+.svc-small {
+  color: #718096;
+  font-size: 13px;
+}
+
+.svc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.svc-card {
+  border-radius: 8px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.svc-card strong {
+  color: #1A1A1A;
+  font-size: 17px;
+}
+
+.svc-card p,
+.svc-panel p {
+  color: #4A5568;
+}
+
+.svc-split {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.9fr) minmax(360px, 1.4fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.svc-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.svc-form input,
+.svc-form select,
+.svc-form textarea,
+.svc-inline input {
+  width: 100%;
+  border: 1.5px solid #E8ECF2;
+  border-radius: 8px;
+  padding: 11px 12px;
+  font-family: var(--font);
+  color: #1A1A1A;
+  outline: none;
+}
+
+.svc-form textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.svc-form input:focus,
+.svc-form select:focus,
+.svc-form textarea:focus,
+.svc-inline input:focus {
+  border-color: #C9A84C;
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.16);
+}
+
+.svc-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.svc-map {
+  height: 430px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #E8ECF2;
+}
+
+.svc-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.svc-table th,
+.svc-table td {
+  border-bottom: 1px solid #E8ECF2;
+  padding: 13px 10px;
+  text-align: left;
+  color: #1A1A1A;
+}
+
+.svc-table th {
+  color: #0A1628;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.svc-status {
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #F8EFE0;
+  color: #8A5A12;
+}
+
+.svc-status.normal,
+.svc-status.selesai {
+  background: #EEF3FA;
+  color: #0D1F3C;
+}
+
+.svc-status.gangguan,
+.svc-status.pending {
+  background: #F8E8E6;
+  color: #C0392B;
+}
+
+.svc-status.pemeliharaan,
+.svc-status.proses {
+  background: #FFF5DA;
+  color: #8A5A12;
+}
+
+.svc-vote-actions {
+  display: flex;
+  gap: 10px;
+  margin: 18px 0 12px;
+}
+
+.svc-result {
+  height: 12px;
+  background: #EEF3FA;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.svc-result span {
+  display: block;
+  height: 100%;
+  background: #C9A84C;
+}
+
+.svc-thread-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.svc-comment {
+  padding: 10px 0;
+  border-bottom: 1px solid #E8ECF2;
+}
+
+.svc-comment strong {
+  color: #0A1628;
+  margin-right: 8px;
+}
+
+.svc-inline {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.svc-announcement {
+  border-left: 4px solid #C9A84C;
+}
+
+.svc-tooltip {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: #0A1628;
+  color: #FFFFFF;
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+}
+
+.svc-tooltip strong {
+  color: #D4AF7A;
+}
+
+@media (max-width: 920px) {
+  .svc-split {
+    grid-template-columns: 1fr;
+  }
+
+  .svc-two,
+  .svc-inline {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .svc-table {
+    min-width: 620px;
+  }
+
+  .svc-panel {
+    overflow-x: auto;
+  }
+}
