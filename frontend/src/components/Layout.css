@@ -1,0 +1,39 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--off-white);
+}
+
+.layout-main {
+  flex: 1;
+  margin-left: 240px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-header {
+  background: var(--white);
+  border-bottom: 1px solid var(--light-gray);
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.layout-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy-dark);
+}
+
+.layout-subtitle {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-top: 2px;
+}
+
+.layout-content {
+  flex: 1;
+  padding: 28px 32px;
+}
