@@ -49,9 +49,9 @@ const seedIfEmpty = async () => {
   ]);
 
   await LocalJob.bulkCreate([
-    { posisi: 'Frontend Developer', perusahaan: 'Medan Digital Hub', lokasi: 'Medan Petisah', tipe: 'Full-time', gaji: 'Rp6-9 juta', deadline: '2024-07-15', deskripsi: 'Membangun dashboard web untuk layanan publik.' },
-    { posisi: 'Analis Data Kesehatan', perusahaan: 'Klinik Kota Medan', lokasi: 'Medan Timur', tipe: 'Contract', gaji: 'Rp5-7 juta', deadline: '2024-07-20', deskripsi: 'Mengolah data layanan kesehatan dan laporan bulanan.' },
-    { posisi: 'Admin Operasional UMKM', perusahaan: 'Koperasi Medan Maju', lokasi: 'Medan Kota', tipe: 'Full-time', gaji: 'Rp4-5 juta', deadline: '2024-07-30', deskripsi: 'Mengelola data anggota dan transaksi harian.' },
+    { posisi: 'Frontend Developer', perusahaan: 'Medan Digital Hub', lokasi: 'Medan Petisah', tipe: 'Full-time', gaji: 'Rp6-9 juta', deadline: '2026-08-15', deskripsi: 'Membangun dashboard web untuk layanan publik.' },
+    { posisi: 'Analis Data Kesehatan', perusahaan: 'Klinik Kota Medan', lokasi: 'Medan Timur', tipe: 'Contract', gaji: 'Rp5-7 juta', deadline: '2026-08-20', deskripsi: 'Mengolah data layanan kesehatan dan laporan bulanan.' },
+    { posisi: 'Admin Operasional UMKM', perusahaan: 'Koperasi Medan Maju', lokasi: 'Medan Kota', tipe: 'Full-time', gaji: 'Rp4-5 juta', deadline: '2026-08-30', deskripsi: 'Mengelola data anggota dan transaksi harian.' },
   ]);
 
   await UmkmBusiness.bulkCreate([

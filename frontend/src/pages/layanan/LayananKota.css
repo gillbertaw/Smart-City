@@ -181,10 +181,14 @@
   color: #8A5A12;
 }
 
-.svc-status.normal,
-.svc-status.selesai {
+.svc-status.normal {
   background: #EEF3FA;
   color: #0D1F3C;
+}
+
+.svc-status.selesai {
+  background: #DFF3E7;
+  color: #1F6B45;
 }
 
 .svc-status.gangguan,

@@ -3,13 +3,44 @@ const CityStats = require('../models/CityStats');
 const AirQuality = require('../models/AirQuality');
 const Traffic = require('../models/Traffic');
 const Facility = require('../models/Facility');
+const User = require('../models/User');
 const { TransportRoute, TransportSchedule } = require('../models/Transport');
+const { Policy, PolicyVote } = require('../models/CityService');
+const cityServices = require('../controllers/cityServiceController');
+const bcrypt = require('bcryptjs');
 require('../models/CityService');
 require('../models/PublicService');
 require('dotenv').config();
 
 const seed = async () => {
   await sequelize.sync({ force: true }); // recreate tables
+
+  // ===== ADMIN USER =====
+  await User.create({
+    nama: 'Admin Smart City',
+    email: 'adminkrabby@gmail.com',
+    password: await bcrypt.hash('123admin', 10),
+    kota: 'Medan',
+    role: 'admin',
+    security_question: 'Apa nama kota smart city ini?',
+    security_answer: await bcrypt.hash('medan', 10),
+  });
+
+  const botPasswordHashes = await Promise.all(
+    Array.from({ length: 8 }, (_, i) => bcrypt.hash(`bot${12345 + i}`, 10))
+  );
+  const botSecurityAnswerHash = await bcrypt.hash('medan', 10);
+  const botUsers = await User.bulkCreate(
+    botPasswordHashes.map((password, i) => ({
+      nama: `Bot Voter ${i + 1}`,
+      email: `bot${i + 1}@gmail.com`,
+      password,
+      kota: 'Medan',
+      role: 'warga',
+      security_question: 'Apa nama kota smart city ini?',
+      security_answer: botSecurityAnswerHash,
+    }))
+  );
 
   // ===== CITY STATS =====
   const bulanList = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agt','Sep','Okt','Nov','Des'];
@@ -106,6 +137,17 @@ const seed = async () => {
     { route_id: routes[4].id, nama_halte: 'Shelter Binjai Raya', urutan: 5, waktu_keberangkatan: '05:55', waktu_kedatangan: '05:53', hari: 'Setiap Hari' },
   ];
   await TransportSchedule.bulkCreate(scheduleData);
+
+  // ===== CITY SERVICES + BOT VOTES =====
+  await cityServices.seedIfEmpty();
+  const policies = await Policy.findAll({ order: [['id', 'ASC']] });
+  await PolicyVote.bulkCreate(policies.flatMap((policy, policyIndex) => (
+    botUsers.map((user, userIndex) => ({
+      policy_id: policy.id,
+      user_id: user.id,
+      pilihan: (policyIndex + userIndex) % 3 === 0 ? 'tidak_setuju' : 'setuju',
+    }))
+  )));
 
   console.log('✅ Seed data berhasil!');
   process.exit(0);

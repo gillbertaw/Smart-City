@@ -44,6 +44,12 @@ const seedIfEmpty = async () => {
   const policies = await Policy.bulkCreate([
     { judul: 'Zona Rendah Emisi Pusat Kota', kategori: 'Transportasi', deskripsi: 'Pembatasan kendaraan emisi tinggi pada jam sibuk di area inti kota.' },
     { judul: 'Insentif Panel Surya Rumah Tangga', kategori: 'Energi', deskripsi: 'Subsidi instalasi panel surya untuk pelanggan rumah tangga prioritas.' },
+    { judul: 'Pembangunan MRT Medan Raya', kategori: 'Transportasi', deskripsi: 'Pembangunan jalur MRT untuk memudahkan mobilitas masyarakat, mengurangi kemacetan, dan menghubungkan pusat kota dengan kawasan permukiman serta pusat ekonomi.' },
+    { judul: 'Digitalisasi Layanan Administrasi Warga', kategori: 'Layanan Publik', deskripsi: 'Pengajuan surat, pengaduan, dan layanan administrasi kota dilakukan secara online agar warga tidak perlu antre lama di kantor layanan.' },
+    { judul: 'Revitalisasi Trotoar dan Jalur Sepeda', kategori: 'Infrastruktur', deskripsi: 'Perbaikan trotoar, penambahan jalur sepeda, dan akses ramah disabilitas di koridor sekolah, pasar, dan pusat perkantoran.' },
+    { judul: 'Program Bank Sampah Kelurahan', kategori: 'Lingkungan', deskripsi: 'Setiap kelurahan memiliki bank sampah terintegrasi untuk mendorong pemilahan sampah rumah tangga dan memberi insentif bagi warga.' },
+    { judul: 'Internet Publik di Ruang Kota', kategori: 'Teknologi', deskripsi: 'Penyediaan Wi-Fi publik di taman, halte, perpustakaan, dan kantor layanan untuk memperluas akses informasi masyarakat.' },
+    { judul: 'Prioritas Drainase Wilayah Rawan Banjir', kategori: 'Lingkungan', deskripsi: 'Normalisasi drainase dan sensor tinggi air diprioritaskan di titik rawan banjir agar respons petugas lebih cepat.' },
   ]);
   const threads = await PolicyThread.bulkCreate([
     { policy_id: policies[0].id, judul: 'Dampak ke UMKM pusat kota', dibuat_oleh: 'Admin Kota' },
@@ -56,6 +62,7 @@ const seedIfEmpty = async () => {
   await CitizenReport.bulkCreate([
     { nama: 'Andi', kategori: 'Jalan Rusak', deskripsi: 'Lubang besar dekat persimpangan.', status: 'proses' },
     { nama: 'Maya', kategori: 'Lampu Jalan', deskripsi: 'Lampu padam tiga malam berturut-turut.', status: 'pending' },
+    { nama: 'William', kategori: 'Balap liar', deskripsi: 'Balap liar mengganggu keamanan dan kenyamanan warga pada malam hari.', status: 'selesai' },
   ]);
   await ServiceSurvey.bulkCreate([
     { layanan: 'Transportasi', periode: 'Q1', skor: 78, responden: 420 },

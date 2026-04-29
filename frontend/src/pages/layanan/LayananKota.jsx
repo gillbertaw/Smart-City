@@ -50,8 +50,8 @@ export default function LayananKota() {
   const [threads, setThreads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
-  const [floodForm, setFloodForm] = useState({ nama: '', lokasi: '', deskripsi: '', lat: '3.5896', lng: '98.6739', foto: null });
-  const [reportForm, setReportForm] = useState({ nama: '', kategori: 'Infrastruktur', deskripsi: '', foto: null });
+  const [floodForm, setFloodForm] = useState({ nama: '', lokasi: '', deskripsi: '', lat: '3.5896', lng: '98.6739', foto: [] });
+  const [reportForm, setReportForm] = useState({ nama: '', kategori: 'Infrastruktur', deskripsi: '', foto: [] });
   const [threadForm, setThreadForm] = useState({ policy_id: '', judul: '' });
   const [commentText, setCommentText] = useState({});
 
@@ -102,18 +102,26 @@ export default function LayananKota() {
   const submitFlood = async (event) => {
     event.preventDefault();
     const form = new FormData();
-    Object.entries(floodForm).forEach(([key, value]) => value && form.append(key, value));
+    form.append('nama', floodForm.nama);
+    form.append('lokasi', floodForm.lokasi);
+    form.append('deskripsi', floodForm.deskripsi);
+    form.append('lat', floodForm.lat);
+    form.append('lng', floodForm.lng);
+    floodForm.foto.forEach(file => form.append('foto', file));
     await api.post('/city-services/floods', form, { headers: { 'Content-Type': 'multipart/form-data' } });
-    setFloodForm({ nama: '', lokasi: '', deskripsi: '', lat: '3.5896', lng: '98.6739', foto: null });
+    setFloodForm({ nama: '', lokasi: '', deskripsi: '', lat: '3.5896', lng: '98.6739', foto: [] });
     await refreshAfter('Laporan titik banjir tersimpan.');
   };
 
   const submitReport = async (event) => {
     event.preventDefault();
     const form = new FormData();
-    Object.entries(reportForm).forEach(([key, value]) => value && form.append(key, value));
+    form.append('nama', reportForm.nama);
+    form.append('kategori', reportForm.kategori);
+    form.append('deskripsi', reportForm.deskripsi);
+    reportForm.foto.forEach(file => form.append('foto', file));
     await api.post('/city-services/reports', form, { headers: { 'Content-Type': 'multipart/form-data' } });
-    setReportForm({ nama: '', kategori: 'Infrastruktur', deskripsi: '', foto: null });
+    setReportForm({ nama: '', kategori: 'Infrastruktur', deskripsi: '', foto: [] });
     await refreshAfter('Pengaduan warga tersimpan.');
   };
 
@@ -197,11 +205,87 @@ export default function LayananKota() {
             <input required placeholder="Nama pelapor" value={floodForm.nama} onChange={e => setFloodForm({ ...floodForm, nama: e.target.value })} />
             <input required placeholder="Lokasi" value={floodForm.lokasi} onChange={e => setFloodForm({ ...floodForm, lokasi: e.target.value })} />
             <div className="svc-two">
-              <input required type="number" step="any" placeholder="Latitude" value={floodForm.lat} onChange={e => setFloodForm({ ...floodForm, lat: e.target.value })} />
-              <input required type="number" step="any" placeholder="Longitude" value={floodForm.lng} onChange={e => setFloodForm({ ...floodForm, lng: e.target.value })} />
+              <div>
+                <label style={{ display: 'block', marginBottom: 4, fontSize: 12, color: '#aaa' }}>Latitude (cm)</label>
+                <input required type="number" step="any" placeholder="3.5896" value={floodForm.lat} onChange={e => setFloodForm({ ...floodForm, lat: e.target.value })} />
+              </div>
+              <div>
+                <label style={{ display: 'block', marginBottom: 4, fontSize: 12, color: '#aaa' }}>Longitude (cm)</label>
+                <input required type="number" step="any" placeholder="98.6739" value={floodForm.lng} onChange={e => setFloodForm({ ...floodForm, lng: e.target.value })} />
+              </div>
             </div>
             <textarea placeholder="Deskripsi kondisi" value={floodForm.deskripsi} onChange={e => setFloodForm({ ...floodForm, deskripsi: e.target.value })} />
-            <input type="file" accept="image/*" onChange={e => setFloodForm({ ...floodForm, foto: e.target.files[0] })} />
+            
+            {/* Multi File Upload */}
+            <div style={{ marginBottom: 12 }}>
+              <label style={{ display: 'block', marginBottom: 8, fontSize: 12, color: '#aaa' }}>Upload Foto/Video (maks 3)</label>
+              <label className="svc-primary" style={{ display: 'inline-block', cursor: 'pointer', padding: '10px 20px', borderRadius: 6 }}>
+                📁 Upload
+                <input 
+                  type="file" 
+                  accept="image/*,video/*" 
+                  multiple 
+                  style={{ display: 'none' }}
+                  onChange={e => {
+                    const files = Array.from(e.target.files);
+                    if (floodForm.foto.length + files.length > 3) {
+                      alert('Maksimal 3 file');
+                      return;
+                    }
+                    setFloodForm({ ...floodForm, foto: [...floodForm.foto, ...files] });
+                  }}
+                />
+              </label>
+              
+              {floodForm.foto.length > 0 && (
+                <div style={{ 
+                  marginTop: 10, 
+                  display: 'flex', 
+                  flexWrap: 'wrap', 
+                  gap: 8,
+                  maxHeight: 150,
+                  overflowY: 'auto',
+                  padding: 8,
+                  background: 'rgba(255,255,255,0.05)',
+                  borderRadius: 6
+                }}>
+                  {floodForm.foto.map((file, idx) => (
+                    <div key={idx} style={{ position: 'relative', width: 80, height: 80 }}>
+                      {file.type.startsWith('video/') ? (
+                        <video style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 4 }} />
+                      ) : (
+                        <img 
+                          src={URL.createObjectURL(file)} 
+                          alt={file.name}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 4 }}
+                        />
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => setFloodForm({ ...floodForm, foto: floodForm.foto.filter((_, i) => i !== idx) })}
+                        style={{
+                          position: 'absolute',
+                          top: -6,
+                          right: -6,
+                          background: '#e74c3c',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '50%',
+                          width: 20,
+                          height: 20,
+                          cursor: 'pointer',
+                          fontSize: 12,
+                          lineHeight: '18px'
+                        }}
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <button className="svc-primary">Kirim Laporan</button>
           </form>
           <div className="svc-panel">
@@ -301,7 +385,77 @@ export default function LayananKota() {
               <option>Infrastruktur</option><option>Keamanan</option><option>Kebersihan</option><option>Pelayanan Publik</option>
             </select>
             <textarea required placeholder="Deskripsi laporan" value={reportForm.deskripsi} onChange={e => setReportForm({ ...reportForm, deskripsi: e.target.value })} />
-            <input type="file" accept="image/*" onChange={e => setReportForm({ ...reportForm, foto: e.target.files[0] })} />
+            
+            {/* Multi File Upload */}
+            <div style={{ marginBottom: 12 }}>
+              <label style={{ display: 'block', marginBottom: 8, fontSize: 12, color: '#aaa' }}>Upload Foto/Video (maks 3)</label>
+              <label className="svc-primary" style={{ display: 'inline-block', cursor: 'pointer', padding: '10px 20px', borderRadius: 6 }}>
+                📁 Upload
+                <input 
+                  type="file" 
+                  accept="image/*,video/*" 
+                  multiple 
+                  style={{ display: 'none' }}
+                  onChange={e => {
+                    const files = Array.from(e.target.files);
+                    if (reportForm.foto.length + files.length > 3) {
+                      alert('Maksimal 3 file');
+                      return;
+                    }
+                    setReportForm({ ...reportForm, foto: [...reportForm.foto, ...files] });
+                  }}
+                />
+              </label>
+              
+              {reportForm.foto.length > 0 && (
+                <div style={{ 
+                  marginTop: 10, 
+                  display: 'flex', 
+                  flexWrap: 'wrap', 
+                  gap: 8,
+                  maxHeight: 150,
+                  overflowY: 'auto',
+                  padding: 8,
+                  background: 'rgba(255,255,255,0.05)',
+                  borderRadius: 6
+                }}>
+                  {reportForm.foto.map((file, idx) => (
+                    <div key={idx} style={{ position: 'relative', width: 80, height: 80 }}>
+                      {file.type.startsWith('video/') ? (
+                        <video style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 4 }} />
+                      ) : (
+                        <img 
+                          src={URL.createObjectURL(file)} 
+                          alt={file.name}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 4 }}
+                        />
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => setReportForm({ ...reportForm, foto: reportForm.foto.filter((_, i) => i !== idx) })}
+                        style={{
+                          position: 'absolute',
+                          top: -6,
+                          right: -6,
+                          background: '#e74c3c',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '50%',
+                          width: 20,
+                          height: 20,
+                          cursor: 'pointer',
+                          fontSize: 12,
+                          lineHeight: '18px'
+                        }}
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <button className="svc-primary">Kirim Pengaduan</button>
           </form>
           <div className="svc-panel">

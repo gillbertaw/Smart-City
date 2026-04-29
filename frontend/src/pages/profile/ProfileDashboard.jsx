@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../utils/api';
 import '../auth/auth.css';
 
 export default function ProfileDashboard() {
+  const navigate = useNavigate();
   const { user, login, token } = useAuth();
   const [profil, setProfil] = useState(null);
   const [statistik, setStatistik] = useState({ totalVote: 0, totalLaporan: 0, totalLogin: 0 });
@@ -77,6 +79,24 @@ export default function ProfileDashboard() {
 
   return (
     <div className="profile-page">
+      {/* Tombol Back */}
+      <button
+        onClick={() => navigate('/')}
+        style={{
+          background: 'transparent',
+          border: '1px solid #ccc',
+          borderRadius: 6,
+          padding: '8px 16px',
+          cursor: 'pointer',
+          fontSize: 14,
+          marginBottom: 20,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 6
+        }}
+      >
+        ← Kembali
+      </button>
 
       {/* HEADER PROFIL */}
       <div className="profile-header">
