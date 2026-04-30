@@ -8,6 +8,8 @@ const navItems = [
   { to: '/udara', icon: '💨', label: 'Kualitas Udara' },
   { to: '/lalu-lintas', icon: '🚦', label: 'Lalu Lintas' },
   { to: '/transportasi', icon: '🚌', label: 'Transportasi' },
+  { to: '/energi', icon: '⚡', label: 'Konsumsi Energi' },
+  { to: '/sampah', icon: '🗑️', label: 'Tracker Sampah' },
   { to: '/layanan-kota', icon: '🏛️', label: 'Layanan Kota' },
   { to: '/layanan-publik', icon: '🏥', label: 'Layanan Publik' },
   { to: '/admin', icon: '🛡️', label: 'Panel Admin', adminOnly: true },

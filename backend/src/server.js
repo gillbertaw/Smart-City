@@ -11,9 +11,8 @@ const indexRoute = require('./routes/index');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ===== MIDDLEWARE =====
 app.use(cors({
-  origin: 'http://localhost:3000', // React dev server
+  origin: 'http://localhost:3000',
   credentials: true
 }));
 app.use(express.json());
@@ -22,7 +21,6 @@ app.use(express.urlencoded({ extended: true }));
 // Static folder untuk file upload
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-// ===== ROUTES =====
 app.use('/api', indexRoute);
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
@@ -33,9 +31,10 @@ app.use('/api/transport', require('./routes/transport'));
 app.use('/api/facilities', require('./routes/facilities'));
 app.use('/api/city-services', require('./routes/cityServices'));
 app.use('/api/public-services', require('./routes/publicServices'));
+app.use('/api/trash', require('./routes/trash'));
 app.use('/api/admin', require('./routes/admin'));
 
-// ===== SERVE REACT BUILD (untuk mode demo/production) =====
+//SERVE REACT BUILD (untuk mode demo/production)
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../../frontend/dist')));
   app.get('*', (req, res) => {
@@ -43,7 +42,6 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// ===== START SERVER =====
 const startServer = async () => {
   await connectMySQL();
   await seedDefaultAdmin();

@@ -16,6 +16,8 @@ import Transportasi from './pages/transportasi/Transportasi';
 import LayananKota from './pages/layanan/LayananKota';
 import LayananPublik from './pages/publik/LayananPublik';
 import AdminPanel from './pages/admin/AdminPanel';
+import Energi from "./pages/energi/Energi";
+import Sampah from "./pages/sampah/Sampah";
 
 import './index.css';
 
@@ -52,6 +54,8 @@ const AppRoutes = () => {
       <Route path="/layanan-publik" element={<ProtectedRoute><LayananPublik /></ProtectedRoute>} />
       <Route path="/admin" element={<ProtectedRoute adminOnly><AdminPanel /></ProtectedRoute>} />
       <Route path="/profil" element={<ProtectedRoute><ProfileDashboard /></ProtectedRoute>} />
+      <Route path="/energi" element={<ProtectedRoute><Energi /></ProtectedRoute>} />
+      <Route path="/sampah" element={<ProtectedRoute><Sampah /></ProtectedRoute>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

@@ -1,0 +1,84 @@
+.sampah-container {
+  padding: 2rem;
+  color: #ffffff;
+}
+
+.sampah-header {
+  margin-bottom: 2rem;
+}
+
+.sampah-header h1 {
+  font-size: 1.8rem;
+  color: #C9A84C;
+  margin-bottom: 0.5rem;
+}
+
+.sampah-header p {
+  color: #aaaaaa;
+}
+
+.sampah-filter {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.sampah-filter select {
+  background: #0D1F3C;
+  color: #ffffff;
+  border: 1px solid #C9A84C55;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.sampah-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.sampah-card {
+  background: #0D1F3C;
+  border: 1px solid #C9A84C33;
+  border-radius: 12px;
+  padding: 1.2rem;
+}
+
+.sampah-card h3 {
+  color: #C9A84C;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.sampah-card p {
+  color: #aaaaaa;
+  font-size: 0.85rem;
+  margin: 0.2rem 0;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+.status-sudah {
+  background: #1a3a1a;
+  color: #4caf50;
+}
+
+.status-belum {
+  background: #1a1a3a;
+  color: #5c6bc0;
+}
+
+.status-terlambat {
+  background: #3a1a1a;
+  color: #ef5350;
+}

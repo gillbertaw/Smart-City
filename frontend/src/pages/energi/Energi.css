@@ -1,0 +1,59 @@
+.energi-container {
+  padding: 2rem;
+  color: #ffffff;
+}
+
+.energi-header {
+  margin-bottom: 2rem;
+}
+
+.energi-header h1 {
+  font-size: 1.8rem;
+  color: #C9A84C;
+  margin-bottom: 0.5rem;
+}
+
+.energi-header p {
+  color: #aaaaaa;
+}
+
+.energi-card {
+  background: #0D1F3C;
+  border: 1px solid #C9A84C33;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.energi-card h2 {
+  color: #C9A84C;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.energi-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-box {
+  background: #0D1F3C;
+  border: 1px solid #C9A84C33;
+  border-radius: 10px;
+  padding: 1.2rem;
+  text-align: center;
+}
+
+.stat-box .nilai {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #C9A84C;
+}
+
+.stat-box .label {
+  font-size: 0.85rem;
+  color: #aaaaaa;
+  margin-top: 0.3rem;
+}

@@ -4,6 +4,7 @@ const AirQuality = require('../models/AirQuality');
 const Traffic = require('../models/Traffic');
 const Facility = require('../models/Facility');
 const User = require('../models/User');
+const Trash = require('../models/Trash');
 const { TransportRoute, TransportSchedule } = require('../models/Transport');
 const { Policy, PolicyVote } = require('../models/CityService');
 const cityServices = require('../controllers/cityServiceController');
@@ -148,6 +149,20 @@ const seed = async () => {
       pilihan: (policyIndex + userIndex) % 3 === 0 ? 'tidak_setuju' : 'setuju',
     }))
   )));
+
+  // ===== TRASH SCHEDULES =====
+  await Trash.bulkCreate([
+    { kelurahan: 'Petisah Tengah', kecamatan: 'Medan Petisah', jadwal_hari: 'Senin, Kamis', jam_pengangkutan: '06:00', frekuensi: '2x Seminggu', status_hari_ini: 'Sudah Diangkut', petugas: 'Tim A' },
+    { kelurahan: 'Sei Sikambing', kecamatan: 'Medan Petisah', jadwal_hari: 'Selasa, Jumat', jam_pengangkutan: '06:30', frekuensi: '2x Seminggu', status_hari_ini: 'Belum Diangkut', petugas: 'Tim A' },
+    { kelurahan: 'Helvetia Tengah', kecamatan: 'Medan Helvetia', jadwal_hari: 'Setiap Hari', jam_pengangkutan: '05:30', frekuensi: 'Setiap Hari', status_hari_ini: 'Sudah Diangkut', petugas: 'Tim B' },
+    { kelurahan: 'Helvetia Timur', kecamatan: 'Medan Helvetia', jadwal_hari: 'Senin, Rabu, Jumat', jam_pengangkutan: '06:00', frekuensi: '3x Seminggu', status_hari_ini: 'Belum Diangkut', petugas: 'Tim B' },
+    { kelurahan: 'Medan Kota Lama', kecamatan: 'Medan Kota', jadwal_hari: 'Setiap Hari', jam_pengangkutan: '05:00', frekuensi: 'Setiap Hari', status_hari_ini: 'Sudah Diangkut', petugas: 'Tim C' },
+    { kelurahan: 'Sudi Rejo', kecamatan: 'Medan Kota', jadwal_hari: 'Selasa, Sabtu', jam_pengangkutan: '07:00', frekuensi: '2x Seminggu', status_hari_ini: 'Terlambat', petugas: 'Tim C' },
+    { kelurahan: 'Amplas', kecamatan: 'Medan Amplas', jadwal_hari: 'Senin, Kamis', jam_pengangkutan: '06:30', frekuensi: '2x Seminggu', status_hari_ini: 'Belum Diangkut', petugas: 'Tim D' },
+    { kelurahan: 'Harjosari', kecamatan: 'Medan Amplas', jadwal_hari: 'Rabu, Sabtu', jam_pengangkutan: '06:00', frekuensi: '2x Seminggu', status_hari_ini: 'Sudah Diangkut', petugas: 'Tim D' },
+    { kelurahan: 'Titi Kuning', kecamatan: 'Medan Johor', jadwal_hari: 'Setiap Hari', jam_pengangkutan: '05:30', frekuensi: 'Setiap Hari', status_hari_ini: 'Sudah Diangkut', petugas: 'Tim E' },
+    { kelurahan: 'Gedung Johor', kecamatan: 'Medan Johor', jadwal_hari: 'Senin, Rabu, Jumat', jam_pengangkutan: '06:00', frekuensi: '3x Seminggu', status_hari_ini: 'Belum Diangkut', petugas: 'Tim E' },
+  ]);
 
   console.log('✅ Seed data berhasil!');
   process.exit(0);
