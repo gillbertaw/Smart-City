@@ -14,10 +14,29 @@ const {
 } = require('../models/CityService');
 const Log = require('../models/Log');
 
-const renewableMix = [
-  { sumber: 'Surya', kontribusi: 62, kapasitas_mw: 48 },
-  { sumber: 'Angin', kontribusi: 38, kapasitas_mw: 29 },
-];
+const renewableMix = {
+  kontribusi: [
+    { sumber: 'Surya', kontribusi: 62, kapasitas_mw: 48, produksi_mwh: 1240, panel_unit: 320 },
+    { sumber: 'Angin', kontribusi: 38, kapasitas_mw: 29, produksi_mwh: 760,  panel_unit: 18  },
+  ],
+  tren_bulanan: [
+    { bulan: 'Jan', Surya: 980,  Angin: 610 },
+    { bulan: 'Feb', Surya: 1050, Angin: 580 },
+    { bulan: 'Mar', Surya: 1120, Angin: 640 },
+    { bulan: 'Apr', Surya: 1200, Angin: 700 },
+    { bulan: 'Mei', Surya: 1240, Angin: 760 },
+    { bulan: 'Jun', Surya: 1180, Angin: 720 },
+  ],
+  per_zona: [
+    { zona: 'Pusat Kota',   surya: 380, angin: 210 },
+    { zona: 'Medan Utara',  surya: 290, angin: 180 },
+    { zona: 'Medan Selatan',surya: 340, angin: 220 },
+    { zona: 'Medan Barat',  surya: 230, angin: 150 },
+  ],
+  emisi_hemat_ton: 1840,
+  target_2025_pct: 68,
+  realisasi_pct:   62,
+};
 
 const seedIfEmpty = async () => {
   if (await EnergyConsumption.count()) return;

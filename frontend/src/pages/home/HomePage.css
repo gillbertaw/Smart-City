@@ -5,7 +5,7 @@
 }
 
 .home-container {
-  width: min(1120px, calc(100% - 40px));
+  width: min(1400px, calc(100% - 64px));
   margin: 0 auto;
 }
 
@@ -37,16 +37,9 @@
   font-size: 18px;
 }
 
-.brand-mark {
-  width: 40px;
-  height: 40px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  background: #C9A84C;
-  color: #0A1628;
-  font-size: 14px;
+.home-brand .brand-logo,
+.footer-brand .brand-logo {
+  width: 190px;
 }
 
 .home-nav-links {
