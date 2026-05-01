@@ -18,8 +18,6 @@ const RED = '#C0392B';
 const INK = '#1A1A1A';
 
 const tabs = [
-  ['energi', 'Energi'],
-  ['sampah', 'Sampah'],
   ['banjir', 'Banjir'],
   ['air', 'Air Bersih'],
   ['terbarukan', 'Terbarukan'],
@@ -45,7 +43,7 @@ const tooltip = ({ active, payload, label }) => {
 const statusClass = (status = '') => `svc-status ${status.toLowerCase().replace(/\s+/g, '-')}`;
 
 export default function LayananKota() {
-  const [active, setActive] = useState('energi');
+  const [active, setActive] = useState('banjir');
   const [data, setData] = useState(null);
   const [threads, setThreads] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -67,18 +65,6 @@ export default function LayananKota() {
   useEffect(() => {
     load().catch(() => setMessage('Gagal memuat data layanan kota.')).finally(() => setLoading(false));
   }, []);
-
-  const energyChart = useMemo(() => {
-    if (!data?.energy) return [];
-    return data.energy.reduce((rows, item) => {
-      const row = rows.find(r => r.bulan === item.bulan) || { bulan: item.bulan };
-      row[item.zona] = item.konsumsi_mwh;
-      if (!rows.includes(row)) rows.push(row);
-      return rows;
-    }, []);
-  }, [data]);
-
-  const zones = useMemo(() => [...new Set((data?.energy || []).map(item => item.zona))], [data]);
 
   const policyStats = (policy) => {
     const votes = policy.votes || [];
@@ -161,42 +147,6 @@ export default function LayananKota() {
           <button key={id} className={active === id ? 'active' : ''} onClick={() => setActive(id)}>{label}</button>
         ))}
       </div>
-
-      {active === 'energi' && (
-        <section className="svc-panel">
-          <div className="svc-panel-head">
-            <h2>Monitor Konsumsi Energi</h2>
-            <span>Per zona per bulan</span>
-          </div>
-          <ResponsiveContainer width="100%" height={360}>
-            <LineChart data={energyChart}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF2" />
-              <XAxis dataKey="bulan" />
-              <YAxis />
-              <Tooltip content={tooltip} />
-              <Legend />
-              {zones.map((zone, index) => (
-                <Line key={zone} type="monotone" dataKey={zone} stroke={[GOLD, BLUE, GOLD_LIGHT, PURPLE][index % 4]} strokeWidth={3} />
-              ))}
-            </LineChart>
-          </ResponsiveContainer>
-        </section>
-      )}
-
-      {active === 'sampah' && (
-        <section className="svc-panel">
-          <div className="svc-panel-head"><h2>Tracker Sampah</h2><span>Jadwal pengangkutan per kelurahan</span></div>
-          <div className="svc-grid">
-            {data.waste.map(item => (
-              <article className="svc-card" key={item.id}>
-                <strong>{item.kelurahan}</strong>
-                <p>{item.hari} · {item.jam}</p>
-                <span>{item.armada} · {item.petugas}</span>
-              </article>
-            ))}
-          </div>
-        </section>
-      )}
 
       {active === 'banjir' && (
         <section className="svc-split">
