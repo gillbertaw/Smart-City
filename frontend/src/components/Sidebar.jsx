@@ -11,6 +11,7 @@ const navItems = [
   { to: '/energi', icon: '⚡', label: 'Konsumsi Energi' },
   { to: '/sampah', icon: '🗑️', label: 'Tracker Sampah' },
   { to: '/layanan-kota', icon: '🏛️', label: 'Layanan Kota' },
+  { to: '/air-bersih', icon: '🚰', label: 'Status Air Bersih' },
   { to: '/layanan-publik', icon: '🏥', label: 'Layanan Publik' },
   { to: '/admin', icon: '🛡️', label: 'Panel Admin', adminOnly: true },
   { to: '/profil', icon: '👤', label: 'Profil Saya' },

@@ -38,6 +38,18 @@ const WaterStatus = sequelize.define('WaterStatus', {
   estimasi_normal: { type: DataTypes.STRING(120) },
 }, { tableName: 'water_statuses', timestamps: true });
 
+const WaterDistribution = sequelize.define('WaterDistribution', {
+  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+  wilayah: { type: DataTypes.STRING(120), allowNull: false },
+  kecamatan: { type: DataTypes.STRING(120), allowNull: false },
+  pelanggan_aktif: { type: DataTypes.INTEGER, defaultValue: 0 },
+  kapasitas_lps: { type: DataTypes.FLOAT, defaultValue: 0 },
+  distribusi_lps: { type: DataTypes.FLOAT, defaultValue: 0 },
+  kehilangan_pct: { type: DataTypes.FLOAT, defaultValue: 0 },
+  status_pipa: { type: DataTypes.ENUM('Baik', 'Perlu Perawatan', 'Kritis'), defaultValue: 'Baik' },
+  update_terakhir: { type: DataTypes.STRING(80) },
+}, { tableName: 'water_distributions', timestamps: true });
+
 const Policy = sequelize.define('Policy', {
   id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
   judul: { type: DataTypes.STRING(180), allowNull: false },
@@ -108,6 +120,7 @@ module.exports = {
   WasteSchedule,
   FloodReport,
   WaterStatus,
+  WaterDistribution,
   Policy,
   PolicyVote,
   PolicyThread,

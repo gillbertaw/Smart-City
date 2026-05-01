@@ -3,6 +3,7 @@ const {
   WasteSchedule,
   FloodReport,
   WaterStatus,
+  WaterDistribution,
   Policy,
   PolicyVote,
   PolicyThread,
@@ -73,6 +74,20 @@ const seedIfEmpty = async () => {
   await Announcement.bulkCreate([
     { judul: 'Pemeliharaan Jaringan PDAM', kategori: 'Air Bersih', tanggal: '2024-06-18', isi: 'Pemeliharaan dilakukan bertahap di Medan Helvetia dan sekitarnya.' },
     { judul: 'Uji Coba Jalur Rendah Emisi', kategori: 'Kebijakan', tanggal: '2024-06-21', isi: 'Uji coba berlaku pukul 07:00 sampai 10:00 di koridor pusat kota.' },
+  ]);
+};
+
+const seedWaterDistribution = async () => {
+  if (await WaterDistribution.count()) return;
+  await WaterDistribution.bulkCreate([
+    { wilayah: 'Medan Kota', kecamatan: 'Medan Kota', pelanggan_aktif: 12450, kapasitas_lps: 180, distribusi_lps: 142, kehilangan_pct: 8.2, status_pipa: 'Baik', update_terakhir: '01 Mei 2025, 06:00' },
+    { wilayah: 'Medan Helvetia', kecamatan: 'Medan Helvetia', pelanggan_aktif: 9870, kapasitas_lps: 120, distribusi_lps: 81, kehilangan_pct: 15.4, status_pipa: 'Perlu Perawatan', update_terakhir: '01 Mei 2025, 06:00' },
+    { wilayah: 'Medan Belawan', kecamatan: 'Medan Belawan', pelanggan_aktif: 7320, kapasitas_lps: 95, distribusi_lps: 54, kehilangan_pct: 24.1, status_pipa: 'Kritis', update_terakhir: '01 Mei 2025, 06:00' },
+    { wilayah: 'Medan Johor', kecamatan: 'Medan Johor', pelanggan_aktif: 10540, kapasitas_lps: 150, distribusi_lps: 121, kehilangan_pct: 9.8, status_pipa: 'Baik', update_terakhir: '01 Mei 2025, 06:00' },
+    { wilayah: 'Medan Sunggal', kecamatan: 'Medan Sunggal', pelanggan_aktif: 8910, kapasitas_lps: 130, distribusi_lps: 104, kehilangan_pct: 11.3, status_pipa: 'Baik', update_terakhir: '01 Mei 2025, 06:00' },
+    { wilayah: 'Medan Amplas', kecamatan: 'Medan Amplas', pelanggan_aktif: 6780, kapasitas_lps: 100, distribusi_lps: 72, kehilangan_pct: 18.7, status_pipa: 'Perlu Perawatan', update_terakhir: '01 Mei 2025, 06:00' },
+    { wilayah: 'Medan Marelan', kecamatan: 'Medan Marelan', pelanggan_aktif: 5430, kapasitas_lps: 80, distribusi_lps: 58, kehilangan_pct: 21.5, status_pipa: 'Kritis', update_terakhir: '01 Mei 2025, 06:00' },
+    { wilayah: 'Medan Tembung', kecamatan: 'Medan Tembung', pelanggan_aktif: 8120, kapasitas_lps: 115, distribusi_lps: 96, kehilangan_pct: 10.1, status_pipa: 'Baik', update_terakhir: '01 Mei 2025, 06:00' },
   ]);
 };
 
@@ -177,5 +192,17 @@ exports.createReport = async (req, res) => {
       ipAddress: req.ip,
     });
     ok(res, row);
+  } catch (err) { fail(res, err); }
+};
+
+exports.waterDetail = async (req, res) => {
+  try {
+    await seedIfEmpty();
+    await seedWaterDistribution();
+    const [statuses, distributions] = await Promise.all([
+      WaterStatus.findAll({ order: [['wilayah', 'ASC']] }),
+      WaterDistribution.findAll({ order: [['wilayah', 'ASC']] }),
+    ]);
+    ok(res, { statuses, distributions });
   } catch (err) { fail(res, err); }
 };
