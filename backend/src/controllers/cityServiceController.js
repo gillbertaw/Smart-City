@@ -11,6 +11,8 @@ const {
   CitizenReport,
   ServiceSurvey,
   Announcement,
+  AnnouncementComment,
+  AnnouncementCommentReaction,
 } = require('../models/CityService');
 const Log = require('../models/Log');
 
@@ -91,8 +93,10 @@ const seedIfEmpty = async () => {
     { layanan: 'Pengaduan', periode: 'Q1', skor: 69, responden: 310 },
   ]);
   await Announcement.bulkCreate([
-    { judul: 'Pemeliharaan Jaringan PDAM', kategori: 'Air Bersih', tanggal: '2024-06-18', isi: 'Pemeliharaan dilakukan bertahap di Medan Helvetia dan sekitarnya.' },
-    { judul: 'Uji Coba Jalur Rendah Emisi', kategori: 'Kebijakan', tanggal: '2024-06-21', isi: 'Uji coba berlaku pukul 07:00 sampai 10:00 di koridor pusat kota.' },
+    { judul: 'Pemeliharaan Jaringan PDAM', kategori: 'Air Bersih', tanggal: '2026-04-25', isi: 'Pemeliharaan dilakukan bertahap di Medan Helvetia dan sekitarnya.' },
+    { judul: 'Uji Coba Jalur Rendah Emisi', kategori: 'Kebijakan', tanggal: '2026-04-01', isi: 'Uji coba berlaku pukul 07:00 sampai 10:00 di koridor pusat kota.' },
+    { judul: 'Penutupan beberapa jalan Kota Medan 2026', kategori: 'Acara', tanggal: '2026-05-01', isi: 'Antisipasi untuk demo buruh.' },
+    { judul: 'Program Makan Bergizi Gratis', kategori: 'Pendidikan', tanggal: '2026-08-01', isi: 'Presiden Indonesia mengadakan Program MBG untuk seluruh wilyah di Indonesia untuk menjaga kebutuhan gizi siswa siswi.' },
   ]);
 };
 
@@ -223,5 +227,47 @@ exports.waterDetail = async (req, res) => {
       WaterDistribution.findAll({ order: [['wilayah', 'ASC']] }),
     ]);
     ok(res, { statuses, distributions });
+  } catch (err) { fail(res, err); }
+};
+
+exports.getAnnouncementComments = async (req, res) => {
+  try {
+    const comments = await AnnouncementComment.findAll({
+      where: { announcement_id: req.params.id },
+      include: [{ model: AnnouncementCommentReaction, as: 'reactions' }],
+      order: [['createdAt', 'ASC']],
+    });
+    ok(res, comments);
+  } catch (err) { fail(res, err); }
+};
+
+exports.createAnnouncementComment = async (req, res) => {
+  try {
+    const comment = await AnnouncementComment.create({
+      announcement_id: Number(req.params.id),
+      user_id: req.user.id,
+      nama: req.user.nama || 'Warga',
+      komentar: req.body.komentar,
+    });
+    ok(res, comment);
+  } catch (err) { fail(res, err); }
+};
+
+exports.reactComment = async (req, res) => {
+  try {
+    const comment_id = Number(req.params.commentId);
+    const user_id = req.user.id;
+    const { reaksi } = req.body;
+    const existing = await AnnouncementCommentReaction.findOne({ where: { comment_id, user_id } });
+    if (existing) {
+      if (existing.reaksi === reaksi) {
+        await existing.destroy();
+        return ok(res, { message: 'Reaksi dibatalkan' });
+      }
+      await existing.update({ reaksi });
+      return ok(res, { message: 'Reaksi diubah' });
+    }
+    const reaction = await AnnouncementCommentReaction.create({ comment_id, user_id, reaksi });
+    ok(res, reaction);
   } catch (err) { fail(res, err); }
 };

@@ -12,5 +12,8 @@ router.get('/threads', ctrl.threads);
 router.post('/threads', ctrl.createThread);
 router.post('/threads/:id/comments', ctrl.createComment);
 router.post('/reports', upload.single('foto'), ctrl.createReport);
+router.get('/announcements/:id/comments', ctrl.getAnnouncementComments);
+router.post('/announcements/:id/comments', ctrl.createAnnouncementComment);
+router.post('/announcements/comments/:commentId/react', ctrl.reactComment);
 
 module.exports = router;

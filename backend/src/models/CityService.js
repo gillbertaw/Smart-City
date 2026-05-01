@@ -108,6 +108,26 @@ const Announcement = sequelize.define('Announcement', {
   tanggal: { type: DataTypes.DATEONLY, allowNull: false },
 }, { tableName: 'announcements', timestamps: true });
 
+const AnnouncementComment = sequelize.define('AnnouncementComment', {
+  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+  announcement_id: { type: DataTypes.INTEGER, allowNull: false },
+  user_id: { type: DataTypes.INTEGER, allowNull: false },
+  nama: { type: DataTypes.STRING(100), allowNull: false },
+  komentar: { type: DataTypes.TEXT, allowNull: false },
+}, { tableName: 'announcement_comments', timestamps: true });
+
+const AnnouncementCommentReaction = sequelize.define('AnnouncementCommentReaction', {
+  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+  comment_id: { type: DataTypes.INTEGER, allowNull: false },
+  user_id: { type: DataTypes.INTEGER, allowNull: false },
+  reaksi: { type: DataTypes.ENUM('like', 'dislike'), allowNull: false },
+}, { tableName: 'announcement_comment_reactions', timestamps: true });
+
+Announcement.hasMany(AnnouncementComment, { foreignKey: 'announcement_id', as: 'comments' });
+AnnouncementComment.belongsTo(Announcement, { foreignKey: 'announcement_id' });
+AnnouncementComment.hasMany(AnnouncementCommentReaction, { foreignKey: 'comment_id', as: 'reactions' });
+AnnouncementCommentReaction.belongsTo(AnnouncementComment, { foreignKey: 'comment_id' });
+
 Policy.hasMany(PolicyVote, { foreignKey: 'policy_id', as: 'votes' });
 PolicyVote.belongsTo(Policy, { foreignKey: 'policy_id' });
 Policy.hasMany(PolicyThread, { foreignKey: 'policy_id', as: 'threads' });
@@ -128,4 +148,6 @@ module.exports = {
   CitizenReport,
   ServiceSurvey,
   Announcement,
+  AnnouncementComment,
+  AnnouncementCommentReaction,
 };
