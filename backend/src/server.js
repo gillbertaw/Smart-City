@@ -6,6 +6,7 @@ require('dotenv').config();
 const { connectMySQL } = require('./config/mysql');
 const { connectMongoDB } = require('./config/mongodb');
 const { seedDefaultAdmin } = require('./seeders/defaultAdminSeed');
+const { seedUsersFromJson } = require('./utils/userJsonStore');
 const indexRoute = require('./routes/index');
 
 const app = express();
@@ -45,6 +46,7 @@ if (process.env.NODE_ENV === 'production') {
 const startServer = async () => {
   await connectMySQL();
   await seedDefaultAdmin();
+  await seedUsersFromJson();
   await connectMongoDB();
   app.listen(PORT, () => {
     console.log(`Server berjalan di http://localhost:${PORT}`);
