@@ -66,7 +66,7 @@ button {
   font-family: var(--font);
 }
 
-/* ===== BUTTON STYLES ===== */
+/*BUTTON STYLES*/
 .btn {
   display: inline-flex;
   align-items: center;
@@ -106,7 +106,7 @@ button {
   color: white;
 }
 
-/* ===== CARD ===== */
+/*CARD*/
 .card {
   background: var(--white);
   border-radius: var(--radius-lg);
@@ -114,7 +114,7 @@ button {
   padding: 24px;
 }
 
-/* ===== FORM ===== */
+/*FORM*/
 .form-group {
   display: flex;
   flex-direction: column;
@@ -149,7 +149,7 @@ button {
   box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.15);
 }
 
-/* ===== BADGE ===== */
+/*BADGE*/
 .badge {
   display: inline-block;
   padding: 3px 10px;
@@ -164,7 +164,7 @@ button {
 .badge-info    { background: #D1ECF1; color: #0C5460; }
 .badge-gold    { background: var(--gold-pale); color: var(--gold-dark); }
 
-/* ===== SCROLLBAR ===== */
+/*SCROLLBAR*/
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--off-white); }
 ::-webkit-scrollbar-thumb { background: var(--light-gray); border-radius: 3px; }

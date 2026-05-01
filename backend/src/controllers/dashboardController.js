@@ -4,11 +4,9 @@ const Traffic = require('../models/Traffic');
 const { TransportRoute } = require('../models/Transport');
 const Facility = require('../models/Facility');
 
-// GET /api/dashboard/stats - statistik kota bulanan
 exports.getCityStats = async (req, res) => {
   try {
     const stats = await CityStats.findAll({ order: [['tahun', 'ASC'], ['id', 'ASC']] });
-    // Summary cards
     const latest = stats[stats.length - 1];
     const summary = {
       populasi: latest?.populasi || 0,
@@ -22,7 +20,6 @@ exports.getCityStats = async (req, res) => {
   }
 };
 
-// GET /api/dashboard/overview - overview semua data
 exports.getOverview = async (req, res) => {
   try {
     const [totalFasilitas, totalRute, totalJalan, avgAqi] = await Promise.all([

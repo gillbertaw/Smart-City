@@ -94,7 +94,7 @@ export default function StatusAirBersih() {
   return (
     <Layout title="Status Air Bersih" subtitle="Distribusi PDAM per wilayah Kota Medan">
 
-      {/* TAB NAV */}
+      {/*TAB NAV*/}
       <div className="air-tabs">
         {[['ringkasan','Ringkasan'],['distribusi','Distribusi'],['status','Status Wilayah'],['pipa','Kondisi Pipa']].map(([id, label]) => (
           <button key={id} className={tab === id ? 'active' : ''} onClick={() => setTab(id)}>
@@ -103,7 +103,7 @@ export default function StatusAirBersih() {
         ))}
       </div>
 
-      {/* ── RINGKASAN ── */}
+      {/*RINGKASAN*/}
       {tab === 'ringkasan' && (
         <div>
           <div className="air-stats-grid">
@@ -137,7 +137,7 @@ export default function StatusAirBersih() {
         </div>
       )}
 
-      {/* ── DISTRIBUSI ── */}
+      {/*DISTRIBUSI*/}
       {tab === 'distribusi' && (
         <div className="air-panel">
           <div className="air-panel-head">
@@ -176,7 +176,7 @@ export default function StatusAirBersih() {
         </div>
       )}
 
-      {/* ── STATUS WILAYAH ── */}
+      {/*STATUS WILAYAH*/}
       {tab === 'status' && (
         <div className="air-panel">
           <div className="air-panel-head">
@@ -203,7 +203,7 @@ export default function StatusAirBersih() {
         </div>
       )}
 
-      {/* ── KONDISI PIPA ── */}
+      {/*KONDISI PIPA */}
       {tab === 'pipa' && (
         <div className="air-panel">
           <div className="air-panel-head">
