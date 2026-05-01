@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const Log = require('../models/Log');
+const { saveUserToJson } = require('../utils/userJsonStore');
 
 // ===== GET PROFIL =====
 const getProfil = async (req, res) => {
@@ -32,6 +33,7 @@ const updateProfil = async (req, res) => {
     }
 
     await user.update(updateData);
+    saveUserToJson(user);
 
     await Log.create({
       userId: user.id,

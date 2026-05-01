@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const Log = require('../models/Log');
+const { saveUserToJson } = require('../utils/userJsonStore');
 require('dotenv').config();
 
 // ===== REGISTER =====
@@ -28,6 +29,8 @@ const register = async (req, res) => {
       security_question,
       security_answer: hashedAnswer
     });
+
+    saveUserToJson(user);
 
     await Log.create({
       userId: user.id,
@@ -167,6 +170,7 @@ const resetPassword = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(new_password, 10);
     await user.update({ password: hashedPassword });
+    saveUserToJson(user);
 
     await Log.create({
       userId: user.id,
