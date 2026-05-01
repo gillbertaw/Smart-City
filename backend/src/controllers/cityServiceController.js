@@ -86,12 +86,6 @@ const seedIfEmpty = async () => {
     { nama: 'Maya', kategori: 'Lampu Jalan', deskripsi: 'Lampu padam tiga malam berturut-turut.', status: 'pending' },
     { nama: 'William', kategori: 'Balap liar', deskripsi: 'Balap liar mengganggu keamanan dan kenyamanan warga pada malam hari.', status: 'selesai' },
   ]);
-  await ServiceSurvey.bulkCreate([
-    { layanan: 'Transportasi', periode: 'Q1', skor: 78, responden: 420 },
-    { layanan: 'Air Bersih', periode: 'Q1', skor: 71, responden: 380 },
-    { layanan: 'Kebersihan', periode: 'Q1', skor: 74, responden: 405 },
-    { layanan: 'Pengaduan', periode: 'Q1', skor: 69, responden: 310 },
-  ]);
   await Announcement.bulkCreate([
     { judul: 'Pemeliharaan Jaringan PDAM', kategori: 'Air Bersih', tanggal: '2026-04-25', isi: 'Pemeliharaan dilakukan bertahap di Medan Helvetia dan sekitarnya.' },
     { judul: 'Uji Coba Jalur Rendah Emisi', kategori: 'Kebijakan', tanggal: '2026-04-01', isi: 'Uji coba berlaku pukul 07:00 sampai 10:00 di koridor pusat kota.' },
@@ -114,6 +108,40 @@ const seedWaterDistribution = async () => {
   ]);
 };
 
+const seedServiceSurvey = async () => {
+  const sudahLengkap = await ServiceSurvey.findOne({ where: { periode: 'Q4' } });
+  if (sudahLengkap) return;
+  await ServiceSurvey.bulkCreate([
+    { layanan: 'Transportasi', periode: 'Q1', skor: 72, responden: 380 },
+    { layanan: 'Air Bersih',   periode: 'Q1', skor: 68, responden: 340 },
+    { layanan: 'Kebersihan',   periode: 'Q1', skor: 70, responden: 360 },
+    { layanan: 'Pengaduan',    periode: 'Q1', skor: 65, responden: 290 },
+    { layanan: 'Kesehatan',    periode: 'Q1', skor: 74, responden: 410 },
+    { layanan: 'Pendidikan',   periode: 'Q1', skor: 76, responden: 390 },
+
+    { layanan: 'Transportasi', periode: 'Q2', skor: 75, responden: 400 },
+    { layanan: 'Air Bersih',   periode: 'Q2', skor: 71, responden: 360 },
+    { layanan: 'Kebersihan',   periode: 'Q2', skor: 73, responden: 380 },
+    { layanan: 'Pengaduan',    periode: 'Q2', skor: 68, responden: 310 },
+    { layanan: 'Kesehatan',    periode: 'Q2', skor: 77, responden: 430 },
+    { layanan: 'Pendidikan',   periode: 'Q2', skor: 78, responden: 410 },
+
+    { layanan: 'Transportasi', periode: 'Q3', skor: 78, responden: 420 },
+    { layanan: 'Air Bersih',   periode: 'Q3', skor: 74, responden: 390 },
+    { layanan: 'Kebersihan',   periode: 'Q3', skor: 76, responden: 405 },
+    { layanan: 'Pengaduan',    periode: 'Q3', skor: 71, responden: 330 },
+    { layanan: 'Kesehatan',    periode: 'Q3', skor: 80, responden: 450 },
+    { layanan: 'Pendidikan',   periode: 'Q3', skor: 81, responden: 430 },
+
+    { layanan: 'Transportasi', periode: 'Q4', skor: 80, responden: 440 },
+    { layanan: 'Air Bersih',   periode: 'Q4', skor: 76, responden: 410 },
+    { layanan: 'Kebersihan',   periode: 'Q4', skor: 79, responden: 420 },
+    { layanan: 'Pengaduan',    periode: 'Q4', skor: 74, responden: 350 },
+    { layanan: 'Kesehatan',    periode: 'Q4', skor: 83, responden: 470 },
+    { layanan: 'Pendidikan',   periode: 'Q4', skor: 84, responden: 450 },
+  ]);
+};
+
 exports.seedIfEmpty = seedIfEmpty;
 
 const ok = (res, data) => res.json({ success: true, data });
@@ -122,6 +150,7 @@ const fail = (res, err) => res.status(500).json({ success: false, message: err.m
 exports.overview = async (req, res) => {
   try {
     await seedIfEmpty();
+    await seedServiceSurvey();
     const [energy, waste, floods, water, policies, reports, surveys, announcements] = await Promise.all([
       EnergyConsumption.findAll({ order: [['zona', 'ASC'], ['id', 'ASC']] }),
       WasteSchedule.findAll({ order: [['kelurahan', 'ASC']] }),
