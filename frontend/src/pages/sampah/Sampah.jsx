@@ -35,8 +35,11 @@ export default function Sampah() {
     return "status-badge status-belum";
   };
 
-  if (loading) return <div className="sampah-container">Memuat data...</div>;
-
+  if (loading) return (
+    <Layout title="" subtitle="">
+      <div className="sampah-container">Memuat data...</div>
+    </Layout>
+  );
   return (
     <Layout title="" subtitle="">
         {<div className="sampah-container">

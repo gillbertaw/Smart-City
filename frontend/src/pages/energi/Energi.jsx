@@ -24,7 +24,11 @@
     const rata = data.length ? (total / data.length).toFixed(1) : 0;
     const tertinggi = data.length ? Math.max(...data.map(d => d.energi_gwh || 0)).toFixed(1) : 0;
 
-    if (loading) return <div className="energi-container">Memuat data...</div>;
+    if (loading) return (
+        <Layout title="" subtitle="">
+            <div className="energi-container">Memuat data...</div>
+        </Layout>
+    );
 
     return (
         <Layout title="" subtitle="">
