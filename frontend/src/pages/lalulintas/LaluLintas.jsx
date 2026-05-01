@@ -15,6 +15,7 @@ export default function LaluLintas() {
   const [traffic, setTraffic] = useState([]);
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [routePaths, setRoutePaths] = useState({});
   const [filterStatus, setFilterStatus] = useState('Semua');
 
   useEffect(() => {
@@ -27,6 +28,52 @@ export default function LaluLintas() {
       setLoading(false);
     }).catch(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    if (!traffic.length) return;
+
+    let cancelled = false;
+
+    const loadRoadPaths = async () => {
+      const paths = {};
+
+      await Promise.all(traffic.map(async (item) => {
+        if (!item.lat_start || !item.lng_start || !item.lat_end || !item.lng_end) return;
+
+        const fallbackPath = [
+          [Number(item.lat_start), Number(item.lng_start)],
+          [Number(item.lat_end), Number(item.lng_end)],
+        ];
+
+        if (Array.isArray(item.path) && item.path.length > 1) {
+          paths[item.id] = item.path.map(([lat, lng]) => [Number(lat), Number(lng)]);
+          return;
+        }
+
+        try {
+          const url = `https://router.project-osrm.org/route/v1/driving/${item.lng_start},${item.lat_start};${item.lng_end},${item.lat_end}?overview=full&geometries=geojson`;
+          const response = await fetch(url);
+          if (!response.ok) throw new Error('Route request failed');
+
+          const result = await response.json();
+          const coordinates = result.routes?.[0]?.geometry?.coordinates;
+          paths[item.id] = coordinates?.length
+            ? coordinates.map(([lng, lat]) => [lat, lng])
+            : fallbackPath;
+        } catch {
+          paths[item.id] = fallbackPath;
+        }
+      }));
+
+      if (!cancelled) setRoutePaths(paths);
+    };
+
+    loadRoadPaths();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [traffic]);
 
   const filtered = filterStatus === 'Semua'
     ? traffic
@@ -123,10 +170,14 @@ export default function LaluLintas() {
                 {traffic.map(t => {
                   if (!t.lat_start || !t.lat_end) return null;
                   const cfg = STATUS_CONFIG[t.status];
+                  const positions = routePaths[t.id]
+                    || t.path
+                    || [[t.lat_start, t.lng_start], [t.lat_end, t.lng_end]];
+
                   return (
                     <Polyline
                       key={t.id}
-                      positions={[[t.lat_start, t.lng_start], [t.lat_end, t.lng_end]]}
+                      positions={positions}
                       color={cfg.color}
                       weight={5}
                       opacity={0.85}
