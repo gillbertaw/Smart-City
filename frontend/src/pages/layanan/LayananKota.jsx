@@ -316,18 +316,102 @@ export default function LayananKota() {
       )}
 
       {active === 'terbarukan' && (
-        <section className="svc-panel">
-          <div className="svc-panel-head"><h2>Panel Energi Terbarukan</h2><span>Kontribusi energi surya dan angin</span></div>
-          <ResponsiveContainer width="100%" height={340}>
-            <PieChart>
-              <Pie data={data.renewable} dataKey="kontribusi" nameKey="sumber" innerRadius={76} outerRadius={120} label>
-                {data.renewable.map((entry, index) => <Cell key={entry.sumber} fill={[GOLD, BLUE][index]} />)}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </ResponsiveContainer>
-        </section>
+        <div>
+          <div className="svc-renewable-stats">
+            <div className="svc-renewable-stat-card">
+              <span>☀️</span>
+              <div className="svc-renewable-stat-value">{data.renewable.kontribusi[0].kapasitas_mw} MW</div>
+              <div className="svc-renewable-stat-label">Kapasitas Surya</div>
+            </div>
+            <div className="svc-renewable-stat-card">
+              <span>💨</span>
+              <div className="svc-renewable-stat-value">{data.renewable.kontribusi[1].kapasitas_mw} MW</div>
+              <div className="svc-renewable-stat-label">Kapasitas Angin</div>
+            </div>
+            <div className="svc-renewable-stat-card">
+              <span>⚡</span>
+              <div className="svc-renewable-stat-value">
+                {(data.renewable.kontribusi[0].produksi_mwh + data.renewable.kontribusi[1].produksi_mwh).toLocaleString('id-ID')} MWh
+              </div>
+              <div className="svc-renewable-stat-label">Total Produksi Bulan Ini</div>
+            </div>
+            <div className="svc-renewable-stat-card">
+              <span>🌿</span>
+              <div className="svc-renewable-stat-value">{data.renewable.emisi_hemat_ton.toLocaleString('id-ID')} ton</div>
+              <div className="svc-renewable-stat-label">Emisi CO₂ Dihemat</div>
+            </div>
+          </div>
+
+          <div className="svc-panel" style={{ marginBottom: 20 }}>
+            <div className="svc-panel-head">
+              <h2>Target vs Realisasi 2025</h2>
+              <span>Persentase bauran energi terbarukan</span>
+            </div>
+            <div className="svc-renewable-progress-wrap">
+              <div className="svc-renewable-progress-row">
+                <span>Target</span>
+                <div className="svc-renewable-bar-bg">
+                  <div className="svc-renewable-bar-fill target" style={{ width: `${data.renewable.target_2025_pct}%` }} />
+                </div>
+                <strong>{data.renewable.target_2025_pct}%</strong>
+              </div>
+              <div className="svc-renewable-progress-row">
+                <span>Realisasi</span>
+                <div className="svc-renewable-bar-bg">
+                  <div className="svc-renewable-bar-fill realisasi" style={{ width: `${data.renewable.realisasi_pct}%` }} />
+                </div>
+                <strong>{data.renewable.realisasi_pct}%</strong>
+              </div>
+            </div>
+          </div>
+
+          <div className="svc-renewable-two-col">
+            <section className="svc-panel">
+              <div className="svc-panel-head"><h2>Kontribusi Sumber Energi</h2><span>Proporsi surya vs angin</span></div>
+              <ResponsiveContainer width="100%" height={280}>
+                <PieChart>
+                  <Pie data={data.renewable.kontribusi} dataKey="kontribusi" nameKey="sumber" innerRadius={70} outerRadius={110} label={({ sumber, kontribusi }) => `${sumber} ${kontribusi}%`}>
+                    {data.renewable.kontribusi.map((entry, index) => (
+                      <Cell key={entry.sumber} fill={[GOLD, BLUE][index]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </section>
+
+            <section className="svc-panel">
+              <div className="svc-panel-head"><h2>Produksi per Zona</h2><span>Satuan: MWh</span></div>
+              <ResponsiveContainer width="100%" height={280}>
+                <BarChart data={data.renewable.per_zona} margin={{ top: 10, right: 10, left: 0, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF2" />
+                  <XAxis dataKey="zona" tick={{ fontSize: 11 }} />
+                  <YAxis />
+                  <Tooltip content={tooltip} />
+                  <Legend />
+                  <Bar dataKey="surya" name="Surya" fill={GOLD} radius={[4,4,0,0]} />
+                  <Bar dataKey="angin" name="Angin" fill={BLUE} radius={[4,4,0,0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </section>
+          </div>
+
+          <section className="svc-panel" style={{ marginTop: 20 }}>
+            <div className="svc-panel-head"><h2>Tren Produksi Bulanan</h2><span>Januari — Juni 2025 (MWh)</span></div>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={data.renewable.tren_bulanan} margin={{ top: 10, right: 20, left: 0, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF2" />
+                <XAxis dataKey="bulan" />
+                <YAxis />
+                <Tooltip content={tooltip} />
+                <Legend />
+                <Line type="monotone" dataKey="Surya" stroke={GOLD} strokeWidth={3} dot={{ r: 5 }} />
+                <Line type="monotone" dataKey="Angin" stroke={BLUE} strokeWidth={3} dot={{ r: 5 }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </section>
+        </div>
       )}
 
       {active === 'voting' && (
