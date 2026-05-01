@@ -1,0 +1,22 @@
+.brand-logo {
+  display: block;
+  width: 240px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.brand-logo.compact {
+  width: 168px;
+}
+
+.brand-logo-fallback {
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.brand-logo-fallback.compact {
+  font-size: 14px;
+}

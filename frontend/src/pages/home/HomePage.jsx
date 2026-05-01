@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import BrandLogo from '../../components/BrandLogo';
 import './HomePage.css';
 
 const services = [
@@ -38,8 +39,7 @@ export default function HomePage() {
       <header className="home-nav">
         <div className="home-container home-nav-inner">
           <Link className="home-brand" to="/">
-            <span className="brand-mark">SC</span>
-            <span>Smart City Medan</span>
+            <BrandLogo compact />
           </Link>
           <nav className="home-nav-links">
             <a href="#layanan">Layanan</a>
@@ -172,8 +172,7 @@ export default function HomePage() {
         <div className="home-container footer-grid">
           <div>
             <Link className="footer-brand" to="/">
-              <span className="brand-mark">SC</span>
-              <span>Smart City Medan</span>
+              <BrandLogo compact />
             </Link>
             <p>
               Portal digital untuk monitoring kota, layanan warga, informasi publik,

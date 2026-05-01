@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import BrandLogo from '../../components/BrandLogo';
 import api from '../../utils/api';
 import './auth.css';
 
@@ -48,8 +49,7 @@ export default function Register() {
     <div className="auth-page">
       <div className="auth-left">
         <div className="auth-brand">
-          <span className="logo-icon">🏙️</span>
-          <h1>Smart City Medan</h1>
+          <BrandLogo className="auth-brand-logo" />
           <p>Portal Digital Warga Kota Medan</p>
         </div>
       </div>

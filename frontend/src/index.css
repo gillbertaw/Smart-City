@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 /* =============================================
    SMART CITY MEDAN - GLOBAL STYLES
@@ -30,7 +30,7 @@
   --danger:       #C0392B;
   --info:         #2471A3;
 
-  --font:         'Poppins', sans-serif;
+  --font:         'Plus Jakarta Sans', sans-serif;
   --radius:       10px;
   --radius-lg:    16px;
   --shadow:       0 2px 12px rgba(10, 22, 40, 0.12);

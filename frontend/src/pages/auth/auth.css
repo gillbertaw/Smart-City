@@ -35,18 +35,19 @@
   bottom: -60px; left: -60px;
 }
 
-.auth-brand { text-align: center; z-index: 1; }
-.auth-brand .logo-icon {
-  font-size: 56px;
-  margin-bottom: 16px;
-  display: block;
+.auth-brand {
+  text-align: center;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.auth-brand h1 {
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--white);
-  margin-bottom: 8px;
+
+.auth-brand-logo {
+  width: 320px;
+  margin-bottom: 18px;
 }
+
 .auth-brand p {
   font-size: 14px;
   color: var(--gold-light);
