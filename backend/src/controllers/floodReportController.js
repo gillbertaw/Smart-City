@@ -4,6 +4,7 @@ const { Op } = require("sequelize");
 exports.getAll = async (req, res) => {
   try {
     const data = await FloodReport.findAll({
+      where: { status_verifikasi: { [Op.ne]: "Selesai" } },
       order: [["waktu_laporan", "DESC"]],
     });
     res.json({ success: true, data });

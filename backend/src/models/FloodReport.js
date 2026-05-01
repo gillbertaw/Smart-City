@@ -34,7 +34,7 @@ const FloodReport = sequelize.define(
       defaultValue: DataTypes.NOW,
     },
     status_verifikasi: {
-      type: DataTypes.ENUM("Menunggu", "Terverifikasi", "Ditolak"),
+      type: DataTypes.ENUM("Menunggu", "Terverifikasi", "Ditolak", "Selesai"),
       defaultValue: "Menunggu",
     },
   },
