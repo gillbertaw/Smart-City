@@ -24,7 +24,7 @@ export default function Login() {
     try {
       const res = await api.post('/auth/login', form);
       login(res.data.user, res.data.token);
-      navigate(res.data.user.role === 'admin' ? '/admin' : '/');
+      navigate(res.data.user.role === 'admin' ? '/admin' : '/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Gagal login.');
     } finally {
@@ -38,7 +38,7 @@ export default function Login() {
     try {
       const res = await api.post('/auth/guest');
       login(res.data.user, res.data.token);
-      navigate('/');
+      navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Gagal masuk sebagai guest.');
     } finally {

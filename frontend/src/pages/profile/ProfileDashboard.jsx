@@ -81,7 +81,7 @@ export default function ProfileDashboard() {
     <div className="profile-page">
       {/* Tombol Back */}
       <button
-        onClick={() => navigate('/')}
+        onClick={() => navigate('/dashboard')}
         style={{
           background: 'transparent',
           border: '1px solid #ccc',

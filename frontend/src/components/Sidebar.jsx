@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import './Sidebar.css';
 
 const navItems = [
-  { to: '/', icon: '🏙️', label: 'Dashboard Kota' },
+  { to: '/dashboard', icon: '🏙️', label: 'Dashboard Kota' },
   { to: '/peta', icon: '🗺️', label: 'Peta Interaktif' },
   { to: '/udara', icon: '💨', label: 'Kualitas Udara' },
   { to: '/lalu-lintas', icon: '🚦', label: 'Lalu Lintas' },

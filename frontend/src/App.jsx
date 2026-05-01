@@ -18,6 +18,7 @@ import LayananPublik from './pages/publik/LayananPublik';
 import AdminPanel from './pages/admin/AdminPanel';
 import Energi from "./pages/energi/Energi";
 import Sampah from "./pages/sampah/Sampah";
+import HomePage from './pages/home/HomePage';
 
 import './index.css';
 
@@ -41,11 +42,12 @@ const AppRoutes = () => {
   const { user } = useAuth();
   return (
     <Routes>
-      <Route path="/login"           element={user ? <Navigate to="/" /> : <Login />} />
-      <Route path="/register"        element={user ? <Navigate to="/" /> : <Register />} />
-      <Route path="/forgot-password" element={user ? <Navigate to="/" /> : <ForgotPassword />} />
+      <Route path="/" element={<HomePage />} />
+      <Route path="/login"           element={user ? <Navigate to="/dashboard" /> : <Login />} />
+      <Route path="/register"        element={user ? <Navigate to="/dashboard" /> : <Register />} />
+      <Route path="/forgot-password" element={user ? <Navigate to="/dashboard" /> : <ForgotPassword />} />
 
-      <Route path="/" element={<ProtectedRoute><DashboardKota /></ProtectedRoute>} />
+      <Route path="/dashboard" element={<ProtectedRoute><DashboardKota /></ProtectedRoute>} />
       <Route path="/peta" element={<ProtectedRoute><PetaInteraktif /></ProtectedRoute>} />
       <Route path="/udara" element={<ProtectedRoute><KualitasUdara /></ProtectedRoute>} />
       <Route path="/lalu-lintas" element={<ProtectedRoute><LaluLintas /></ProtectedRoute>} />

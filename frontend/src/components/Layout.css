@@ -33,6 +33,26 @@
   margin-top: 2px;
 }
 
+.layout-home-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: var(--navy-dark);
+  color: var(--white);
+  border: 1px solid var(--navy-border);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.layout-home-link:hover {
+  color: var(--navy-dark);
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
 .layout-content {
   flex: 1;
   padding: 28px 32px;
