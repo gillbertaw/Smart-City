@@ -90,11 +90,11 @@ export default function LayananPublik() {
   };
 
   if (loading) {
-    return <Layout title="Layanan Publik" subtitle="Kesehatan, keamanan, pendidikan, kerja, dan UMKM"><div className="pub-loading">Memuat data...</div></Layout>;
+    return <Layout title="Layanan Publik" ><div className="pub-loading">Memuat data...</div></Layout>;
   }
 
   return (
-    <Layout title="Layanan Publik" subtitle="Fitur Smart City 16 sampai 22">
+    <Layout title="Layanan Publik" subtitle="Kesehatan, keamanan, pendidikan, kerja, dan UMKM">
       {activeAlerts.map(alert => (
         <div className={`pub-alert ${alert.tingkat.toLowerCase()}`} key={alert.id}>
           <strong>{alert.tingkat}: {alert.judul}</strong>

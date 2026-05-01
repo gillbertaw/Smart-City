@@ -149,11 +149,11 @@ export default function LayananKota() {
   };
 
   if (loading) {
-    return <Layout title="Layanan Kota" subtitle="Monitoring dan partisipasi warga"><div className="svc-loading">Memuat layanan kota...</div></Layout>;
+    return <Layout title="Layanan Kota" ><div className="svc-loading">Memuat layanan kota...</div></Layout>;
   }
 
   return (
-    <Layout title="Layanan Kota" subtitle="Fitur Smart City 6 sampai 15">
+    <Layout title="Layanan Kota" subtitle="Monitoring dan partisipasi warga">
       {message && <div className="svc-message">{message}</div>}
 
       <div className="svc-tabs">
