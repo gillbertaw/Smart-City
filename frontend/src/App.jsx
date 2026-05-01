@@ -19,6 +19,7 @@ import AdminPanel from './pages/admin/AdminPanel';
 import StatusAirBersih from './pages/air/StatusAirBersih';
 import Energi from "./pages/energi/Energi";
 import Sampah from "./pages/sampah/Sampah";
+import LaporanBanjir from "./pages/banjir/LaporanBanjir";
 import HomePage from './pages/home/HomePage';
 import BrandLogo from './components/BrandLogo';
 
@@ -62,6 +63,7 @@ const AppRoutes = () => {
       <Route path="/profil" element={<ProtectedRoute><ProfileDashboard /></ProtectedRoute>} />
       <Route path="/energi" element={<ProtectedRoute><Energi /></ProtectedRoute>} />
       <Route path="/sampah" element={<ProtectedRoute><Sampah /></ProtectedRoute>} />
+      <Route path="/banjir" element={<ProtectedRoute><LaporanBanjir /></ProtectedRoute>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
