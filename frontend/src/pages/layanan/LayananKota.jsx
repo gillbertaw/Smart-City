@@ -15,6 +15,7 @@ const GOLD_LIGHT = '#D4AF7A';
 const BLUE = '#2471A3';
 const PURPLE = '#8E44AD';
 const RED = '#C0392B';
+const GREEN  = '#1E8449';
 const INK = '#1A1A1A';
 
 const tabs = [
@@ -52,6 +53,7 @@ export default function LayananKota() {
   const [reportForm, setReportForm] = useState({ nama: '', kategori: 'Infrastruktur', deskripsi: '', foto: [] });
   const [threadForm, setThreadForm] = useState({ policy_id: '', judul: '' });
   const [commentText, setCommentText] = useState({});
+  const [surveiPeriode, setSurveiPeriode] = useState('Q4');
 
   const load = async () => {
     const [overview, threadRes] = await Promise.all([
@@ -501,21 +503,171 @@ export default function LayananKota() {
         </section>
       )}
 
-      {active === 'survei' && (
-        <section className="svc-panel">
-          <div className="svc-panel-head"><h2>Survei Kepuasan Layanan</h2><span>Hasil berkala dalam chart</span></div>
-          <ResponsiveContainer width="100%" height={340}>
-            <BarChart data={data.surveys}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF2" />
-              <XAxis dataKey="layanan" />
-              <YAxis domain={[0, 100]} />
-              <Tooltip content={tooltip} />
-              <Bar dataKey="skor" name="Skor" fill={GOLD} radius={[6, 6, 0, 0]} />
-              <Bar dataKey="responden" name="Responden" fill={BLUE} radius={[6, 6, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </section>
-      )}
+      {active === 'survei' && (() => {
+        const periodeList = [...new Set((data.surveys || []).map(s => s.periode))].sort();
+        const filtered    = (data.surveys || []).filter(s => s.periode === surveiPeriode);
+        const allLayanan  = [...new Set((data.surveys || []).map(s => s.layanan))];
+        const trendData   = allLayanan.map(layanan => {
+          const row = { layanan };
+          periodeList.forEach(p => {
+            const found = data.surveys.find(s => s.layanan === layanan && s.periode === p);
+            row[p] = found ? found.skor : 0;
+          });
+          return row;
+        });
+        const totalResponden = filtered.reduce((s, i) => s + (i.responden || 0), 0);
+        const rataSkor = filtered.length
+          ? (filtered.reduce((s, i) => s + (i.skor || 0), 0) / filtered.length).toFixed(1)
+          : 0;
+        const skorTertinggi = filtered.length
+          ? filtered.reduce((a, b) => a.skor > b.skor ? a : b)
+          : null;
+        const skorTerendah = filtered.length
+          ? filtered.reduce((a, b) => a.skor < b.skor ? a : b)
+          : null;
+
+        return (
+          <div>
+            <div className="svc-survei-stats">
+              <div className="svc-survei-stat-card">
+                <span>📋</span>
+                <div className="svc-survei-stat-value">{filtered.length}</div>
+                <div className="svc-survei-stat-label">Jenis Layanan Disurvei</div>
+              </div>
+              <div className="svc-survei-stat-card">
+                <span>👥</span>
+                <div className="svc-survei-stat-value">{totalResponden.toLocaleString('id-ID')}</div>
+                <div className="svc-survei-stat-label">Total Responden</div>
+              </div>
+              <div className="svc-survei-stat-card">
+                <span>⭐</span>
+                <div className="svc-survei-stat-value">{rataSkor}</div>
+                <div className="svc-survei-stat-label">Rata-rata Skor</div>
+              </div>
+              <div className="svc-survei-stat-card">
+                <span>🏆</span>
+                <div className="svc-survei-stat-value">{skorTertinggi?.skor ?? '-'}</div>
+                <div className="svc-survei-stat-label">Skor Tertinggi · {skorTertinggi?.layanan ?? ''}</div>
+              </div>
+            </div>
+
+            <div className="svc-survei-filter">
+              <span>Periode:</span>
+              {periodeList.map(p => (
+                <button
+                  key={p}
+                  className={surveiPeriode === p ? 'active' : ''}
+                  onClick={() => setSurveiPeriode(p)}
+                >{p}</button>
+              ))}
+            </div>
+
+            <div className="svc-renewable-two-col">
+              <section className="svc-panel">
+                <div className="svc-panel-head">
+                  <h2>Skor Kepuasan {surveiPeriode}</h2>
+                  <span>Skala 0–100</span>
+                </div>
+                <ResponsiveContainer width="100%" height={280}>
+                  <BarChart data={filtered} margin={{ top: 10, right: 10, left: 0, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF2" />
+                    <XAxis dataKey="layanan" tick={{ fontSize: 11 }} />
+                    <YAxis domain={[0, 100]} />
+                    <Tooltip content={tooltip} />
+                    <Bar dataKey="skor" name="Skor" radius={[6,6,0,0]}>
+                      {filtered.map((entry) => (
+                        <Cell
+                          key={entry.layanan}
+                          fill={entry.skor >= 80 ? GREEN : entry.skor >= 70 ? GOLD : RED}
+                        />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </section>
+
+              <section className="svc-panel">
+                <div className="svc-panel-head">
+                  <h2>Jumlah Responden {surveiPeriode}</h2>
+                  <span>Per jenis layanan</span>
+                </div>
+                <ResponsiveContainer width="100%" height={280}>
+                  <BarChart data={filtered} margin={{ top: 10, right: 10, left: 0, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF2" />
+                    <XAxis dataKey="layanan" tick={{ fontSize: 11 }} />
+                    <YAxis />
+                    <Tooltip content={tooltip} />
+                    <Bar dataKey="responden" name="Responden" fill={BLUE} radius={[6,6,0,0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </section>
+            </div>
+
+            <section className="svc-panel" style={{ marginTop: 20 }}>
+              <div className="svc-panel-head">
+                <h2>Tren Skor per Layanan</h2>
+                <span>Q1 — Q4 2024</span>
+              </div>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={trendData} margin={{ top: 10, right: 20, left: 0, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF2" />
+                  <XAxis dataKey="layanan" tick={{ fontSize: 11 }} />
+                  <YAxis domain={[60, 100]} />
+                  <Tooltip content={tooltip} />
+                  <Legend />
+                  {periodeList.map((p, i) => (
+                    <Line
+                      key={p}
+                      type="monotone"
+                      dataKey={p}
+                      stroke={[GOLD, BLUE, PURPLE, GREEN][i % 4]}
+                      strokeWidth={2}
+                      dot={{ r: 4 }}
+                    />
+                  ))}
+                </LineChart>
+              </ResponsiveContainer>
+            </section>
+
+            <section className="svc-panel" style={{ marginTop: 20 }}>
+              <div className="svc-panel-head">
+                <h2>Detail Hasil Survei {surveiPeriode}</h2>
+                <span>Lengkap per layanan</span>
+              </div>
+              <table className="svc-table">
+                <thead>
+                  <tr>
+                    <th>Layanan</th>
+                    <th>Skor</th>
+                    <th>Responden</th>
+                    <th>Kategori</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtered.sort((a, b) => b.skor - a.skor).map(item => (
+                    <tr key={item.id}>
+                      <td>{item.layanan}</td>
+                      <td>
+                        <strong style={{ color: item.skor >= 80 ? GREEN : item.skor >= 70 ? GOLD : RED }}>
+                          {item.skor}
+                        </strong>
+                      </td>
+                      <td>{(item.responden || 0).toLocaleString('id-ID')}</td>
+                      <td>
+                        <span className="svc-survei-badge" style={{
+                          background: item.skor >= 80 ? GREEN : item.skor >= 70 ? GOLD : RED
+                        }}>
+                          {item.skor >= 80 ? 'Baik' : item.skor >= 70 ? 'Cukup' : 'Perlu Perhatian'}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </section>
+          </div>
+        );
+      })()}
 
       {active === 'pengumuman' && (
         <section className="svc-grid">
