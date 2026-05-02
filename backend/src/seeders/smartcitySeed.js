@@ -96,7 +96,7 @@ const seed = async () => {
     { nama: 'Balai Kota Medan', jenis: 'Kantor Pemerintah', alamat: 'Jl. Kapten Maulana Lubis No.2', kecamatan: 'Medan Petisah', telepon: '061-4512412', jam_buka: 'Sen-Jum 08:00-16:00', lat: 3.5908, lng: 98.6693, deskripsi: 'Kantor walikota Medan' },
     { nama: 'Kantor Gubernur Sumatera Utara', jenis: 'Kantor Pemerintah', alamat: 'Jl. Diponegoro No.30', kecamatan: 'Medan Polonia', telepon: '061-4156000', jam_buka: 'Sen-Jum 08:00-16:00', lat: 3.5775, lng: 98.6720, deskripsi: 'Gedung pemerintah provinsi Sumatera Utara' },
     { nama: 'Masjid Raya Al-Mashun', jenis: 'Masjid', alamat: 'Jl. Sisingamangaraja', kecamatan: 'Medan Kota', telepon: null, jam_buka: '05:00 - 22:00', lat: 3.5883, lng: 98.6876, deskripsi: 'Masjid bersejarah warisan kesultanan Deli' },
-    { nama: 'Pasar Petisah', jenis: 'Pasar', alamat: 'Jl. Kota Baru', kecamatan: 'Medan Petisah', telepon: null, jam_buka: '06:00 - 18:00', lat: 3.5835, lng: 98.6618, deskripsi: 'Pasar tradisional terbesar di Medan' },
+    { nama: 'Pasar Petisah', jenis: 'Pasar', alamat: 'Jl. Kota Baru', kecamatan: 'Medan Petisah', telepon: null, jam_buka: '06:00 - 18:00', lat: 3.59112, lng: 98.66658, deskripsi: 'Pasar tradisional terbesar di Medan' },
   ]);
 
   // ===== TRANSPORT =====

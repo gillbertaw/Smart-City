@@ -20,7 +20,6 @@ const INK = '#1A1A1A';
 
 const tabs = [
   ['banjir', 'Banjir'],
-  ['air', 'Air Bersih'],
   ['terbarukan', 'Terbarukan'],
   ['voting', 'Voting'],
   ['forum', 'Forum'],
@@ -255,18 +254,6 @@ export default function LayananKota() {
         </section>
       )}
 
-      {active === 'air' && (
-        <section className="svc-panel">
-          <div className="svc-panel-head"><h2>Status Air Bersih</h2><span>Distribusi PDAM per wilayah</span></div>
-          <table className="svc-table">
-            <thead><tr><th>Wilayah</th><th>Status</th><th>Debit</th><th>Tekanan</th><th>Estimasi</th></tr></thead>
-            <tbody>{data.water.map(item => (
-              <tr key={item.id}><td>{item.wilayah}</td><td><span className={statusClass(item.status)}>{item.status}</span></td><td>{item.debit_lps} lps</td><td>{item.tekanan_bar} bar</td><td>{item.estimasi_normal}</td></tr>
-            ))}</tbody>
-          </table>
-        </section>
-      )}
-
       {active === 'terbarukan' && (
         <div>
           <div className="svc-renewable-stats">
@@ -422,7 +409,6 @@ export default function LayananKota() {
             </select>
             <textarea required placeholder="Deskripsi laporan" value={reportForm.deskripsi} onChange={e => setReportForm({ ...reportForm, deskripsi: e.target.value })} />
             
-            {/* Multi File Upload */}
             <div style={{ marginBottom: 12 }}>
               <label style={{ display: 'block', marginBottom: 8, fontSize: 12, color: '#aaa' }}>Upload Foto/Video (maks 3)</label>
               <label className="svc-primary" style={{ display: 'inline-block', cursor: 'pointer', padding: '10px 20px', borderRadius: 6 }}>
