@@ -114,7 +114,7 @@ export default function ProfileDashboard() {
             {profil?.role === 'admin' ? '⭐ Admin Kota' : '🏠 Warga'}
           </span>
         </div>
-        <button className="btn btn-outline" style={{ marginLeft: 'auto', color: 'var(--gold)', borderColor: 'var(--gold)' }}
+        <button className="btn btn-outline" style={{ marginLeft: 'auto', color: 'var(--gold)', borderColor: 'var(--gold)', position: 'relative', zIndex : 1 }}
           onClick={() => setEditMode(!editMode)}>
           {editMode ? 'Batal' : '✏️ Edit Profil'}
         </button>

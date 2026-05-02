@@ -10,5 +10,29 @@
     "security_answer": "$2a$10$UVob.mUCc4dmUF9brED7o.f9/Gcb/99FZ8xTRlLoFc5B9BgG79SB.",
     "created_at": "2026-05-02T00:12:36.000Z",
     "updated_at": "2026-05-02T00:15:51.827Z"
+  },
+  {
+    "nama": "Admin Smart city",
+    "email": "adminkrabby@gmail.com",
+    "password": "$2a$10$FbkJB.GLHy3lFEzP2JkSMuTlzhGxEwtGaIzUtRKfPfJjzFCY80mSO",
+    "kota": "Medan",
+    "role": "admin",
+    "foto_profil": "/uploads/1777684340121-740034130.png",
+    "security_question": "Apa nama kota smart city ini?",
+    "security_answer": "$2a$10$9O4tHMEFDqyzr9zy2McDWOEGtBKIi5DAtalDRv0N3Im0MIPiWRp7m",
+    "created_at": "2026-05-02T00:12:26.000Z",
+    "updated_at": "2026-05-02T01:12:20.216Z"
+  },
+  {
+    "nama": "tes baru",
+    "email": "inites@gmail.com",
+    "password": "$2a$10$19EGXkftdh/BAH8lFrEhR.W8QHupAL19vaypduhAZLw6D8e3S81rO",
+    "kota": "Medan",
+    "role": "warga",
+    "foto_profil": "/uploads/1777685136568-180534516.png",
+    "security_question": "Nama hewan peliharaan pertama kamu?",
+    "security_answer": "$2a$10$BaQ7IlKPfBG.n.1mn1ZOxeaZw2nSVtWWA6uKYuUTkFJrBFsVejYe.",
+    "created_at": "2026-05-02T01:23:37.000Z",
+    "updated_at": "2026-05-02T01:25:36.600Z"
   }
 ]
