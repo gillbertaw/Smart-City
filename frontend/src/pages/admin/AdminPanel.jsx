@@ -29,22 +29,22 @@ const masterConfigs = {
       alamat: "",
       kecamatan: "",
       telepon: "",
-      bed_total: 0,
-      bed_tersedia: 0,
+      bed_total: "",
+      bed_tersedia: "",
       status: "Tersedia",
       lat: 3.5896,
       lng: 98.6739,
     },
     fields: [
-      "nama",
-      "alamat",
-      "kecamatan",
-      "telepon",
-      "bed_total",
-      "bed_tersedia",
-      "status",
-      "lat",
-      "lng",
+      { key: "nama", placeholder: "Nama RS" },
+      { key: "alamat", placeholder: "Alamat lengkap" },
+      { key: "kecamatan", placeholder: "Kecamatan" },
+      { key: "telepon", placeholder: "Telepon" },
+      { key: "bed_total", placeholder: "Jlh bed" },
+      { key: "bed_tersedia", placeholder: "Jlh bed tersedia" },
+      { key: "status", placeholder: "Status (Tersedia / Penuh)" },
+      { key: "lat", placeholder: "Latitude" },
+      { key: "lng", placeholder: "Longitude" },
     ],
   },
   education: {
@@ -53,19 +53,19 @@ const masterConfigs = {
       nama: "",
       jenis: "Sekolah",
       alamat: "",
-      akreditasi: "A",
-      jumlah_siswa: 0,
+      akreditasi: "",
+      jumlah_siswa: "",
       lat: 3.5896,
       lng: 98.6739,
     },
     fields: [
-      "nama",
-      "jenis",
-      "alamat",
-      "akreditasi",
-      "jumlah_siswa",
-      "lat",
-      "lng",
+      { key: "nama", placeholder: "Nama sekolah/universitas" },
+      { key: "jenis", placeholder: "(Sekolah / Universitas)" },
+      { key: "alamat", placeholder: "Alamat lengkap" },
+      { key: "akreditasi", placeholder: "Akreditasi" },
+      { key: "jumlah_siswa", placeholder: "Jlh Siswa" },
+      { key: "lat", placeholder: "Latitude" },
+      { key: "lng", placeholder: "Longitude" },
     ],
   },
   umkm: {
@@ -74,21 +74,21 @@ const masterConfigs = {
       nama: "",
       kategori: "Kuliner",
       pemilik: "",
-      omzet_bulanan: 0,
-      tenaga_kerja: 0,
+      omzet_bulanan: "",
+      tenaga_kerja: "",
       alamat: "",
       lat: 3.5896,
       lng: 98.6739,
     },
     fields: [
-      "nama",
-      "kategori",
-      "pemilik",
-      "omzet_bulanan",
-      "tenaga_kerja",
-      "alamat",
-      "lat",
-      "lng",
+      { key: "nama", placeholder: "Nama UMKM" },
+      { key: "kategori", placeholder: "Kategori (Kuliner / Fashion / Kerajinan)" },
+      { key: "pemilik", placeholder: "Nama pemilik" },
+      { key: "omzet_bulanan", placeholder: "Omzet bulanan" },
+      { key: "tenaga_kerja", placeholder: "Jlh tenaga kerja" },
+      { key: "alamat", placeholder: "Alamat lengkap" },
+      { key: "lat", placeholder: "Latitude" },
+      { key: "lng", placeholder: "Longitude" },
     ],
   },
   transport: {
@@ -96,24 +96,24 @@ const masterConfigs = {
     empty: {
       kode_rute: "",
       nama_rute: "",
-      jenis: "Bus",
+      jenis: "",
       terminal_awal: "",
       terminal_akhir: "",
-      tarif: 0,
-      jam_operasi_mulai: "05:00",
-      jam_operasi_selesai: "21:00",
+      tarif: "",
+      jam_operasi_mulai: "",
+      jam_operasi_selesai: "",
       status_aktif: true,
     },
     fields: [
-      "kode_rute",
-      "nama_rute",
-      "jenis",
-      "terminal_awal",
-      "terminal_akhir",
-      "tarif",
-      "jam_operasi_mulai",
-      "jam_operasi_selesai",
-      "status_aktif",
+      { key: "kode_rute", placeholder: "Kode rute (cth: BUS-01)" },
+      { key: "nama_rute", placeholder: "Nama rute (cth:: Amplas - Pinang Baris)" },
+      { key: "jenis", placeholder: "Jenis (Bus / Angkot / BRT)" },
+      { key: "terminal_awal", placeholder: "Terminal awal" },
+      { key: "terminal_akhir", placeholder: "Terminal akhir" },
+      { key: "tarif", placeholder: "Tarif" },
+      { key: "jam_operasi_mulai", placeholder: "Jam mulai (cth: 05:00)" },
+      { key: "jam_operasi_selesai", placeholder: "Jam selesai (cth: 21:00)" },
+      { key: "status_aktif", placeholder: "Status aktif (true / false)" },
     ],
   },
 };
@@ -440,18 +440,24 @@ export default function AdminPanel() {
                 </option>
               ))}
             </select>
-            {masterConfigs[masterType].fields.map((field) => (
-              <input
-                key={field}
-                placeholder={field}
-                value={String(masterForm[field] ?? "")}
-                onChange={(e) =>
-                  setMasterForm({
-                    ...masterForm,
-                    [field]: normalizeValue(field, e.target.value),
-                  })
-                }
-              />
+            {masterConfigs[masterType].fields.map(({ key, placeholder }) => (
+              <div key={key}>
+                {(key === 'lat' || key === 'lng') && (
+                  <label style={{ fontSize: 12, color: '#aaa', marginBottom: 4, display: 'block' }}>
+                    {key === 'lat' ? 'Latitude' : 'Longitude'}
+                  </label>
+                )}
+                <input
+                  placeholder={placeholder}
+                  value={String(masterForm[key] ?? "")}
+                  onChange={(e) =>
+                    setMasterForm({
+                      ...masterForm,
+                      [key]: normalizeValue(key, e.target.value),
+                    })
+                  }
+                />
+              </div>
             ))}
             <button>Simpan</button>
           </form>
